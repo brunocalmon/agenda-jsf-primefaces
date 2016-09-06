@@ -7,10 +7,11 @@ import javax.faces.model.SelectItem;
 import br.com.agenda.entity.Contato;
 
 public class ContatoVisao {
-	
+
 	private Contato contato;
 	private List<SelectItem> tipoBuscaContato;
 	private Integer tipoBuscaContatoSelecionado;
+	private List<String> listaResultadoContato;
 
 	public Contato getContato() {
 		return contato;
@@ -34,5 +35,13 @@ public class ContatoVisao {
 
 	public void setTipoBuscaContatoSelecionado(Integer tipoBuscaContatoSelecionado) {
 		this.tipoBuscaContatoSelecionado = tipoBuscaContatoSelecionado;
+	}
+
+	public List<String> getListaResultadoContato() {
+		return listaResultadoContato;
+	}
+
+	public void setListaResultadoContato(List<String> listaResultadoContato) {
+		this.listaResultadoContato = listaResultadoContato;
 	}
 }

@@ -18,27 +18,38 @@
 	<ui:define name="content">
 		<h:form prependId="false">
 			<p:messages autoUpdate="true" />
-			<p:panel>
+			<p:panel id="buscaContatoPanel">
 				<p:panelGrid columns="2">
-					<p:column>
-						<p:outputLabel value="Buscar Por: " />
-						<p:selectOneMenu id="tipoBuscaContato"
-							value="#{contatoBean.contatoVisao.tipoBuscaContatoSelecionado}">
-							<f:selectItem itemLabel="Selecione" />
-							<f:selectItems value="#{contatoBean.contatoVisao.tipoBuscaContato}"
-								var="tipo" itemValue="#{tipo}"
-								itemLabel="#{tipo.label}" />
-						</p:selectOneMenu>
-					</p:column>
-					<p:column>
-						<p:outputLabel value="Consultar Contato: " rendered="" />
-						<p:inputText value="#{contatoBean.contatoVisao.contato.noContato}" />
-					</p:column>
-					<p:column>
-						<p:commandButton action="#{contatoBean.consultaContato()}"
-							value="Incluir" ajax="false" />
-						<p:commandButton value="Limpar" type="reset" />
-					</p:column>
+
+					<p:outputLabel value="Buscar Por: " />
+					<p:selectOneMenu id="tipoBuscaContato"
+						value="#{contatoBean.contatoVisao.tipoBuscaContatoSelecionado}">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItems
+							value="#{contatoBean.contatoVisao.tipoBuscaContato}" var="tipo"
+							itemValue="#{tipo.value}" itemLabel="#{tipo.label}" />
+						<p:ajax event="change" partialSubmit="true"
+							update="buscaContatoPanel" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Consultar Contato: "
+						rendered="#{contatoBean.verificaTipoDeBusca() eq 1}" />
+					<p:inputText value="#{contatoBean.contatoVisao.contato.noContato}"
+						rendered="#{contatoBean.verificaTipoDeBusca() eq 1}"
+						required="true" requiredMessage="Campo nome está vazio." />
+
+					<p:outputLabel value="Consultar Telefone: "
+						rendered="#{contatoBean.verificaTipoDeBusca() eq 2}" />
+					<p:inputMask value="#{contatoBean.contatoVisao.contato.nuTelefone}"
+						mask="(99) 9999-9999"
+						rendered="#{contatoBean.verificaTipoDeBusca() eq 2}"
+						required="true" requiredMessage="Campo telefone está vazio." />
+
+					<p:commandButton action="#{contatoBean.consultaContato()}"
+						value="Incluir" ajax="false"
+						disabled="#{contatoBean.verificaTipoDeBusca() eq 0}" />
+					<p:commandButton value="Limpar" type="reset"
+						disabled="#{contatoBean.verificaTipoDeBusca() eq 0}" />
 				</p:panelGrid>
 			</p:panel>
 		</h:form>

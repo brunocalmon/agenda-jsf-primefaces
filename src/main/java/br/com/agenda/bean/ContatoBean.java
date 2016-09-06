@@ -39,11 +39,14 @@ public class ContatoBean extends GenericBean {
 		if (ValidacoesContato.nullOrEmpty(getContatoVisao())) {
 			setContatoVisao(new ContatoVisao());
 		}
-		if (ValidacoesContato.nullOrEmpty(getContatoVisao().getTipoBuscaContato())){
+		if (ValidacoesContato.nullOrEmpty(getContatoVisao().getContato())) {
+			getContatoVisao().setContato(new Contato());
+		}
+		if (ValidacoesContato.nullOrEmpty(getContatoVisao().getTipoBuscaContato())) {
 			iniciaTipoBuscaContato();
 		}
 	}
-	
+
 	public void incluirContato() {
 		getContato().setNoContato(limpaEspacosVazios(getContato().getNoContato()));
 		getContato().setDtEntrada(new Date());
@@ -61,9 +64,14 @@ public class ContatoBean extends GenericBean {
 			setContato(new Contato());
 		}
 	}
-	
-	public void consultaContato(){
-		
+
+	public void consultaContato() {
+		if (getContatoVisao().getTipoBuscaContatoSelecionado().equals(TipoBuscaContatoEnum.NOME.getId())) {
+			getContatoVisao().setListaResultadoContato(contatoService.buscarContatoPorNome(getContatoVisao().getContato()));
+		}
+		if (getContatoVisao().getTipoBuscaContatoSelecionado().equals(TipoBuscaContatoEnum.TELEFONE.getId())) {
+			getContatoVisao().setListaResultadoContato(contatoService.buscarContatoPorTelefone(getContatoVisao().getContato()));
+		}
 	}
 
 	private void iniciaTipoBuscaContato() {
@@ -72,7 +80,20 @@ public class ContatoBean extends GenericBean {
 			getContatoVisao().getTipoBuscaContato().add(new SelectItem(e.getId(), e.getValor()));
 		}
 	}
-	
+
+	public int verificaTipoDeBusca() {
+
+		if (null != getContatoVisao().getTipoBuscaContatoSelecionado()) {
+			switch (getContatoVisao().getTipoBuscaContatoSelecionado()) {
+			case 1:
+				return 1;
+			case 2:
+				return 2;
+			}
+		}
+		return 0;
+	}
+
 	public Contato getContato() {
 		return contato;
 	}
