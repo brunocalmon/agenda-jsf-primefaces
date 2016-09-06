@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<f:facet name="header" />
+
+	<h:form id="menu-navbar" prependId="false">
+		<p:menubar>
+			<p:submenu label="#{msg['lbl.home']}">
+				<p:menuitem value="#{msg['lbl.home']}" action="/pages/home/home.jsf" />
+			</p:submenu>
+			<p:submenu label="#{msg['lbl.contatos']}">
+				<p:menuitem value="#{msg['lbl.incluir']}"
+					action="/pages/contato/incluirContato.jsf" />
+				<p:menuitem value="#{msg['lbl.consultar']}"
+					action="/pages/contato/consultaContato.jsf" />
+			</p:submenu>
+			<p:submenu label="#{msg['lbl.tarefas']}">
+				<p:menuitem value="#{msg['lbl.incluir']}"
+					action="/pages/tarefa/incluirTarefa.jsf" />
+				<p:menuitem value="#{msg['lbl.consultar']}" />
+			</p:submenu>
+			<p:submenu label="#{msg['lbl.lembretes']}">
+				<p:menuitem value="#{msg['lbl.incluir']}"
+					action="/pages/lembrete/incluirLembrete.jsf" />
+				<p:menuitem value="#{msg['lbl.consultar']}" />
+			</p:submenu>
+		</p:menubar>
+	</h:form>
+
+</ui:composition>

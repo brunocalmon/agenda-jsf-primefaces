@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/templates/main.xhtml">
+	<ui:define name="breadcrumb">
+		<h:form>
+			<p:breadCrumb homeDisplay="false">
+				<p:menuitem value="Início" url="/" />
+				<p:menuitem value="Contato" />
+				<p:menuitem value="Consulta"
+					url="/pages/contato/consultaContato.jsf" />
+			</p:breadCrumb>
+		</h:form>
+	</ui:define>
+	<ui:define name="content">
+		<h:form prependId="false">
+			<p:messages autoUpdate="true" />
+			<p:panel>
+				<p:panelGrid columns="2">
+					<p:column>
+						<p:outputLabel value="Buscar Por: " />
+						<p:selectOneMenu id="tipoBuscaContato"
+							value="#{contatoBean.contatoVisao.tipoBuscaContatoSelecionado}">
+							<f:selectItem itemLabel="Selecione" />
+							<f:selectItems value="#{contatoBean.contatoVisao.tipoBuscaContato}"
+								var="tipo" itemValue="#{tipo}"
+								itemLabel="#{tipo.label}" />
+						</p:selectOneMenu>
+					</p:column>
+					<p:column>
+						<p:outputLabel value="Consultar Contato: " rendered="" />
+						<p:inputText value="#{contatoBean.contatoVisao.contato.noContato}" />
+					</p:column>
+					<p:column>
+						<p:commandButton action="#{contatoBean.consultaContato()}"
+							value="Incluir" ajax="false" />
+						<p:commandButton value="Limpar" type="reset" />
+					</p:column>
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

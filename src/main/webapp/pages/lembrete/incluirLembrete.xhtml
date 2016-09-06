@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/templates/main.xhtml">
+
+	<ui:define name="breadcrumb">
+		<h:form>
+			<p:breadCrumb homeDisplay="false">
+				<p:menuitem value="Início" url="/" />
+				<p:menuitem value="Contato" />
+				<p:menuitem value="Incluir" url="/pages/contato/incluirContato.jsf" />
+			</p:breadCrumb>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form prependId="false" id="formIncluirTarefa">
+			<p:messages autoUpdate="true" />
+			<p:panel>
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Titulo do Lembrete: " />
+					<p:inputText value="#{lembreteBean.lembrete.noLembrete}"
+						required="true"
+						requiredMessage="Insira um titulo para este lembrete." />
+
+					<p:outputLabel value="Descrição do lembrete: " />
+					<p:inputMask value="#{lembreteBean.lembrete.deLembrete}"
+						required="true"
+						requiredMessage="Insira um corpo p/ este lembrete." />
+
+					<p:commandButton action="#{lembreteBean.incluirLembrete()}"
+						value="Incluir" ajax="false" />
+					<p:commandButton value="Limpar" type="reset" />
+
+				</p:panelGrid>
+
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

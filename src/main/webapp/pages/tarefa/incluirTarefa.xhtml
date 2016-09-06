@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/templates/main.xhtml">
+
+	<ui:define name="breadcrumb">
+		<h:form>
+			<p:breadCrumb homeDisplay="false">
+				<p:menuitem value="Início" url="/" />
+				<p:menuitem value="Contato" />
+				<p:menuitem value="Incluir" url="/pages/contato/incluirContato.jsf" />
+			</p:breadCrumb>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form prependId="false" id="formIncluirTarefa">
+			<p:messages autoUpdate="true" />
+			<p:panel>
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Titulo da tarefa: " />
+					<p:inputText value="#{tarefaBean.tarefa.noTarefa}" required="true"
+						requiredMessage="Insira um titulo para esta tarefa." />
+
+					<p:outputLabel value="Descrição da tarefa: " />
+					<p:inputMask value="#{tarefaBean.tarefa.deTarefa}" required="true"
+						requiredMessage="Insira um corpo a esta tarefa." />
+
+					<p:commandButton action="#{tarefaBean.incluirTarefa()}"
+						value="Incluir" ajax="false" />
+					<p:commandButton value="Limpar" type="reset" />
+
+				</p:panelGrid>
+
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
