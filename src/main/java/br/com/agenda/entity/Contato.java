@@ -7,8 +7,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "contato", schema = "public")
 public class Contato implements Serializable {
 
 	private static final long serialVersionUID = 3269376878922748348L;
@@ -23,7 +25,7 @@ public class Contato implements Serializable {
 
 	@Column(name = "nu_telefone")
 	private String nuTelefone;
-	
+
 	@Column(name = "dt_entrada")
 	private Date dtEntrada;
 

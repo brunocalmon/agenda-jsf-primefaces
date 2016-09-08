@@ -6,38 +6,35 @@ import javax.ejb.Stateless;
 import javax.inject.Named;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.persistence.Table;
 
 import br.com.agenda.entity.Contato;
 
 @Named
 @Stateless
-@Table(name = "contato", schema = "public")
 public class ContatoDAO extends DAO<Contato> {
 
 	@SuppressWarnings("unchecked")
-	public List<String> buscarContatoPorNome(Contato contato) {
+	public List<Contato> buscarContatoPorNome(Contato contato) {
 		StringBuilder sql = new StringBuilder("");
-		sql.append(" SELECT e FROM contato e WHERE e.no_contato = " + contato.getNoContato());
+		sql.append(" SELECT c FROM Contato c ");
+		sql.append(" WHERE LOWER(c.noContato) LIKE LOWER(CONCAT('%', :nome, '%')))");
 		try {
 			Query query = em.createQuery(sql.toString());
-//			query.setParameter("contato", Contato.class);
-//			query.setParameter("noContato", contato.getNoContato());
-			return query.getResultList();
+			query.setParameter("nome", contato.getNoContato());
+			return (List<Contato>) query.getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<String> buscarContatoPorTelefone(Contato contato) {
+	public List<Contato> buscarContatoPorTelefone(Contato contato) {
 		StringBuilder sql = new StringBuilder("");
-		sql.append(" SELECT c.no_contato, c.nu_telefone, c.dt_entrada FROM :Contato c ");
-		sql.append(" WHERE c.nu_telefone LIKE :nuTelefone");
+		sql.append(" SELECT c FROM Contato c ");
+		sql.append(" WHERE c.nuTelefone = :telefone");
 		try {
 			Query query = em.createQuery(sql.toString());
-			query.setParameter("Contato", contato);
-			query.setParameter(":nuTelefone", "%" + contato.getNuTelefone() + "%");
+			query.setParameter("telefone", contato.getNuTelefone());
 			return query.getResultList();
 		} catch (NoResultException e) {
 			return null;

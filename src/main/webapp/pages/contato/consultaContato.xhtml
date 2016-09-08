@@ -46,11 +46,33 @@
 						required="true" requiredMessage="Campo telefone está vazio." />
 
 					<p:commandButton action="#{contatoBean.consultaContato()}"
-						value="Incluir" ajax="false"
+						value="Buscar" ajax="false"
 						disabled="#{contatoBean.verificaTipoDeBusca() eq 0}" />
 					<p:commandButton value="Limpar" type="reset"
 						disabled="#{contatoBean.verificaTipoDeBusca() eq 0}" />
 				</p:panelGrid>
+			</p:panel>
+
+			<p:panel id="relatorioContatoPanel">
+				<p:dataTable var="contato"
+					value="#{contatoBean.contatoVisao.listaResultadoContato}">
+					<p:column headerText="Id" sortBy="#{contato.nuContato}">
+						<h:outputText value="#{contato.nuContato}" />
+					</p:column>
+
+					<p:column headerText="Nome" sortBy="#{contato.noContato}">
+						<h:outputText value="#{contato.noContato}" />
+					</p:column>
+
+					<p:column headerText="Telefone" sortBy="#{contato.nuTelefone}">
+						<h:outputText value="#{contato.nuTelefone}"
+							converter="telefoneConverter" />
+					</p:column>
+					<p:column headerText="Entrada" sortBy="#{contato.dtEntrada}">
+						<h:outputText value="#{contato.dtEntrada}"
+							converter="dateConverter" />
+					</p:column>
+				</p:dataTable>
 			</p:panel>
 		</h:form>
 	</ui:define>

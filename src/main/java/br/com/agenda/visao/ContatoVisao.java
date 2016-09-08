@@ -11,7 +11,7 @@ public class ContatoVisao {
 	private Contato contato;
 	private List<SelectItem> tipoBuscaContato;
 	private Integer tipoBuscaContatoSelecionado;
-	private List<String> listaResultadoContato;
+	private List<Contato> listaResultadoContato;
 
 	public Contato getContato() {
 		return contato;
@@ -37,11 +37,11 @@ public class ContatoVisao {
 		this.tipoBuscaContatoSelecionado = tipoBuscaContatoSelecionado;
 	}
 
-	public List<String> getListaResultadoContato() {
+	public List<Contato> getListaResultadoContato() {
 		return listaResultadoContato;
 	}
 
-	public void setListaResultadoContato(List<String> listaResultadoContato) {
+	public void setListaResultadoContato(List<Contato> listaResultadoContato) {
 		this.listaResultadoContato = listaResultadoContato;
 	}
 }

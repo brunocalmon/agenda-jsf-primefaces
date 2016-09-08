@@ -20,9 +20,12 @@
 		<!-- The datasource is deployed as WEB-INF/agenda-ds.xml, you can find 
 			it in the source at src/main/webapp/WEB-INF/agenda-ds.xml -->
 		<jta-data-source>java:jboss/datasources/agendaDS</jta-data-source>
+<!-- 		<exclude-unlisted-classes>false</exclude-unlisted-classes> -->
+		<class>br.com.agenda.entity.Contato</class>
 		<properties>
 			<!-- Properties for Hibernate -->
 			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.archive.autodetection" value="class, hbm" />
 			<property name="hibernate.show_sql" value="false" />
 		</properties>
 	</persistence-unit>
