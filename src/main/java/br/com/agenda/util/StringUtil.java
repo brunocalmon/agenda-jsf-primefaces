@@ -4,12 +4,16 @@ import java.text.ParseException;
 
 import javax.swing.text.MaskFormatter;
 
+import org.jboss.logging.Logger;
+
 /**
  * 
  * @author bruno.calmon
  *
  */
 public class StringUtil {
+
+	private static final Logger LOGGER = Logger.getLogger(StringUtil.class);
 
 	private StringUtil() {
 
@@ -36,18 +40,24 @@ public class StringUtil {
 			formatter.setValueContainsLiteralCharacters(false);
 			return formatter.valueToString(value);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return "";
 	}
 
+	/**
+	 * 
+	 * @param mask
+	 * @param value
+	 * @return String
+	 */
 	public static String desformatString(String mask, String value) {
 		try {
 			MaskFormatter desformatter = new MaskFormatter(mask);
 			desformatter.setValueContainsLiteralCharacters(false);
 			return desformatter.stringToValue(value).toString();
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return "";
 	}

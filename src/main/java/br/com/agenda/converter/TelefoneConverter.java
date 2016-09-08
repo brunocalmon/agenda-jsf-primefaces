@@ -8,6 +8,11 @@ import javax.faces.convert.FacesConverter;
 
 import br.com.agenda.util.StringUtil;
 
+/**
+ * 
+ * @author bruno.calmon
+ *
+ */
 @FacesConverter("telefoneConverter")
 public class TelefoneConverter implements Converter {
 	private static final String TELEFONE_MASCARA = "(##) ####-####"; 

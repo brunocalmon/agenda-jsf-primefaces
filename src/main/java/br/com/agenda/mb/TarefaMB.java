@@ -25,14 +25,14 @@ import br.com.agenda.validacoes.ValidacoesTarefa;
 public class TarefaMB extends GenericMB {
 
 	private static final long serialVersionUID = 1674348933662083014L;
-	
+
 	private static final Logger LOGGER = Logger.getLogger(TarefaMB.class);
 
 	private Tarefa tarefa;
 
 	@EJB
 	private TarefaService tarefaService;
-	
+
 	@PostConstruct
 	private void init() {
 		if (ValidacoesTarefa.nullOrEmpty(getTarefa())) {

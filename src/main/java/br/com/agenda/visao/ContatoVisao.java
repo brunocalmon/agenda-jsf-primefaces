@@ -6,6 +6,11 @@ import javax.faces.model.SelectItem;
 
 import br.com.agenda.entity.Contato;
 
+/**
+ * 
+ * @author bruno.calmon
+ *
+ */
 public class ContatoVisao {
 
 	private Contato contato;

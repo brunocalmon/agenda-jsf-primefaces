@@ -3,8 +3,18 @@ package br.com.agenda.validacoes;
 import br.com.agenda.entity.Tarefa;
 import br.com.agenda.exceptions.AgendaException;
 
+/**
+ * 
+ * @author bruno.calmon
+ *
+ */
 public class ValidacoesTarefa extends Validacoes {
 
+	/**
+	 * 
+	 * @param tarefa
+	 * @throws AgendaException
+	 */
 	public static void validaInclusaoTarefa(Tarefa tarefa) throws AgendaException {
 		if (nullOrEmpty(tarefa.getNoTarefa())) {
 			throw new AgendaException("Campo não poed ser vazio.");

@@ -33,7 +33,7 @@ public class LembreteMB extends GenericMB {
 
 	@EJB
 	private LembreteService lembreteService;
-	
+
 	@PostConstruct
 	private void init() {
 		if (ValidacoesContato.nullOrEmpty(getLembrete())) {

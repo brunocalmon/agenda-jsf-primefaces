@@ -17,9 +17,9 @@ import org.jboss.logging.Logger;
  * @param <T>
  */
 public abstract class DAO<T> {
-	
+
 	private static final Logger LOGGER = Logger.getLogger(DAO.class);
-	
+
 	@PersistenceContext
 	EntityManager em;
 

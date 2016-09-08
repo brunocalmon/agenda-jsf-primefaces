@@ -9,6 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @author bruno.calmon
+ *
+ */
 @Entity
 @Table(name = "contato", schema = "public")
 public class Contato implements Serializable {

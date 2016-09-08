@@ -12,5 +12,5 @@ import br.com.agenda.entity.Tarefa;
  */
 @Named
 @Stateless
-public class TarefaDAO extends DAO<Tarefa>{
+public class TarefaDAO extends DAO<Tarefa> {
 }

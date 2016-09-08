@@ -12,5 +12,5 @@ import br.com.agenda.entity.Lembrete;
  */
 @Named
 @Stateless
-public class LembreteDAO extends DAO<Lembrete>{
+public class LembreteDAO extends DAO<Lembrete> {
 }
