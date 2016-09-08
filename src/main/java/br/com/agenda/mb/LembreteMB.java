@@ -9,7 +9,6 @@ import javax.faces.bean.ViewScoped;
 
 import org.jboss.logging.Logger;
 
-import br.com.agenda.entity.Contato;
 import br.com.agenda.entity.Lembrete;
 import br.com.agenda.exceptions.AgendaException;
 import br.com.agenda.service.LembreteService;
@@ -43,7 +42,7 @@ public class LembreteMB extends GenericMB {
 	}
 
 	/**
-	 * 
+	 * Persiste dados
 	 */
 	public void incluirLembrete() {
 		getLembrete().setNoLembrete(StringUtil.limpaEspacosVazios(this.lembrete.getNoLembrete()));
@@ -58,6 +57,7 @@ public class LembreteMB extends GenericMB {
 
 		} catch (AgendaException ae) {
 			exibirMsgErro(ae.getMessage());
+			LOGGER.info(ae);
 		} catch (Exception e) {
 			LOGGER.info(e);
 		} finally {

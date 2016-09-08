@@ -1,5 +1,6 @@
 package br.com.agenda.dao;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -7,12 +8,26 @@ import javax.inject.Named;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+import org.jboss.logging.Logger;
+
 import br.com.agenda.entity.Contato;
 
+/**
+ * 
+ * @author bruno.calmon
+ *
+ */
 @Named
 @Stateless
 public class ContatoDAO extends DAO<Contato> {
 
+	private static final Logger LOGGER = Logger.getLogger(DAO.class);
+	
+	/**
+	 * 
+	 * @param contato
+	 * @return List<Contato>
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Contato> buscarContatoPorNome(Contato contato) {
 		StringBuilder sql = new StringBuilder("");
@@ -23,10 +38,16 @@ public class ContatoDAO extends DAO<Contato> {
 			query.setParameter("nome", contato.getNoContato());
 			return (List<Contato>) query.getResultList();
 		} catch (NoResultException e) {
-			return null;
+			LOGGER.info(e);
+			return Collections.emptyList();
 		}
 	}
 
+	/**
+	 * 
+	 * @param contato
+	 * @return List<Contato>
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Contato> buscarContatoPorTelefone(Contato contato) {
 		StringBuilder sql = new StringBuilder("");
@@ -37,7 +58,8 @@ public class ContatoDAO extends DAO<Contato> {
 			query.setParameter("telefone", contato.getNuTelefone());
 			return query.getResultList();
 		} catch (NoResultException e) {
-			return null;
+			LOGGER.info(e);
+			return Collections.emptyList();
 		}
 	}
 

@@ -15,6 +15,11 @@ import br.com.agenda.service.TarefaService;
 import br.com.agenda.util.StringUtil;
 import br.com.agenda.validacoes.ValidacoesTarefa;
 
+/**
+ * 
+ * @author bruno.calmon
+ *
+ */
 @ViewScoped
 @ManagedBean()
 public class TarefaMB extends GenericMB {
@@ -25,6 +30,9 @@ public class TarefaMB extends GenericMB {
 
 	private Tarefa tarefa;
 
+	@EJB
+	private TarefaService tarefaService;
+	
 	@PostConstruct
 	private void init() {
 		if (ValidacoesTarefa.nullOrEmpty(getTarefa())) {
@@ -32,9 +40,9 @@ public class TarefaMB extends GenericMB {
 		}
 	}
 
-	@EJB
-	private TarefaService tarefaService;
-
+	/**
+	 * Persiste dados
+	 */
 	public void incluirTarefa() {
 		getTarefa().setNoTarefa(StringUtil.limpaEspacosVazios(getTarefa().getNoTarefa()));
 		getTarefa().setDeTarefa(StringUtil.limpaEspacosVazios(getTarefa().getDeTarefa()));
@@ -48,6 +56,7 @@ public class TarefaMB extends GenericMB {
 
 		} catch (AgendaException ae) {
 			exibirMsgErro(ae.getMessage());
+			LOGGER.info(ae);
 		} catch (Exception e) {
 			LOGGER.info(e);
 		} finally {

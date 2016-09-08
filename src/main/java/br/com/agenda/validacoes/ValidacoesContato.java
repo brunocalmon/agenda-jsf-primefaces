@@ -1,7 +1,6 @@
 package br.com.agenda.validacoes;
 
 import br.com.agenda.entity.Contato;
-import br.com.agenda.entity.Lembrete;
 import br.com.agenda.exceptions.AgendaException;
 
 /**

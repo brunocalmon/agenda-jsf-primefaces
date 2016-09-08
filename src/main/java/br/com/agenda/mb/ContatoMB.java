@@ -7,7 +7,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.jboss.logging.Logger;
@@ -20,8 +19,13 @@ import br.com.agenda.util.StringUtil;
 import br.com.agenda.validacoes.ValidacoesContato;
 import br.com.agenda.visao.ContatoVisao;
 
+/**
+ * 
+ * @author bruno.calmon
+ *
+ */
 @ViewScoped
-@ManagedBean()
+@ManagedBean
 public class ContatoMB extends GenericMB {
 
 	private static final long serialVersionUID = -4127295858936642247L;
@@ -33,6 +37,9 @@ public class ContatoMB extends GenericMB {
 	private Contato contato;
 	private ContatoVisao contatoVisao;
 
+	/**
+	 * Inicializador
+	 */
 	@PostConstruct
 	public void init() {
 		if (ValidacoesContato.nullOrEmpty(getContato())) {
@@ -49,6 +56,9 @@ public class ContatoMB extends GenericMB {
 		}
 	}
 
+	/**
+	 * Persiste dados
+	 */
 	public void incluirContato() {
 		getContato().setNoContato(StringUtil.limpaEspacosVazios(getContato().getNoContato()));
 		getContato().setDtEntrada(new Date());
@@ -60,6 +70,7 @@ public class ContatoMB extends GenericMB {
 
 		} catch (AgendaException ae) {
 			exibirMsgErro(ae.getMessage());
+			LOGGER.info(ae);
 		} catch (Exception e) {
 			LOGGER.info(e);
 		} finally {
@@ -67,6 +78,9 @@ public class ContatoMB extends GenericMB {
 		}
 	}
 
+	/**
+	 * Faz consulta
+	 */
 	public void consultaContato() {
 		if (getContatoVisao().getTipoBuscaContatoSelecionado().equals(TipoBuscaContatoEnum.NOME.getId())) {
 			getContatoVisao()
@@ -85,6 +99,11 @@ public class ContatoMB extends GenericMB {
 		}
 	}
 
+	/**
+	 * verifica tipo a ser buscado
+	 * 
+	 * @return inteiro
+	 */
 	public int verificaTipoDeBusca() {
 
 		if (null != getContatoVisao().getTipoBuscaContatoSelecionado()) {
@@ -93,6 +112,8 @@ public class ContatoMB extends GenericMB {
 				return 1;
 			case 2:
 				return 2;
+			default:
+				break;
 			}
 		}
 		return 0;
@@ -109,7 +130,9 @@ public class ContatoMB extends GenericMB {
 	}
 
 	/**
-	 * <p>Limpa filtro</p>
+	 * <p>
+	 * Limpa filtro
+	 * </p>
 	 */
 	public void limpaFiltroConsulta() {
 		contatoVisao.setContato(new Contato());

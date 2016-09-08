@@ -8,8 +8,11 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
-import br.com.agenda.util.StringUtil;
-
+/**
+ * 
+ * @author bruno.calmon
+ *
+ */
 @FacesConverter("dateConverter")
 public class DateConverter implements Converter {
 	private static final String DATA_MASCARA = "dd/MM/yyyy";
