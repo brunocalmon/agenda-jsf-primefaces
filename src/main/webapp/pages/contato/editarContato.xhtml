@@ -11,34 +11,33 @@
 			<p:breadCrumb homeDisplay="false" id="breadCrumb">
 				<p:menuitem value="Início" action="/pages/home/home.xhtml" />
 				<p:menuitem value="Contato" />
-				<p:menuitem value="Incluir"
-					action="/pages/contato/incluirContato.jsf" />
+				<p:menuitem value="Editar" action="/pages/contato/editarContato.jsf" />
 			</p:breadCrumb>
 		</h:form>
 	</ui:define>
 
 	<ui:define name="content">
-		<h:form prependId="false" id="formIncluirContato">
+		<h:form prependId="false" id="formEditarContato">
 			<p:messages autoUpdate="true" />
 			<p:panel>
 				<p:panelGrid columns="2">
 
-					<p:outputLabel value="Nome: " id="lblIncluirContatoNome" />
-					<p:inputText value="#{contatoMB.contato.noContato}" required="true"
+					<p:outputLabel value="Nome: " id="lblEditarContatoNome" />
+					<p:inputText value="#{contatoMB.contatoVisao.contato.noContato}" required="true"
 						requiredMessage="Insira o nome do contato."
-						id="inputIncluirContatoNome" />
+						id="inputEditarContatoNome" />
 
-					<p:outputLabel value="Telefone: " id="lblIncluirContatoTelefone" />
-					<p:inputMask value="#{contatoMB.contato.nuTelefone}"
+					<p:outputLabel value="Telefone: " id="lblEditarContatoTelefone" />
+					<p:inputMask value="#{contatoMB.contatoVisao.contato.nuTelefone}"
 						mask="(99) 9999-9999" required="true"
 						requiredMessage="Insira o número de telefone."
-						id="inputIncluirContatoTelefone" />
+						id="inputEditarContatoTelefone" />
 
-					<p:commandButton action="#{contatoMB.incluirContato()}"
-						value="Incluir" ajax="false" id="btnConsultaContato" />
+					<p:commandButton action="#{contatoMB.editarContato(contatoMB.contatoVisao.contato)}"
+						value="Editar" ajax="false" id="btnEditaContato" />
 
 					<p:commandButton value="Limpar"
-						update="inputIncluirContatoTelefone inputIncluirContatoNome"
+						update="inputEditarContatoTelefone inputEditarContatoNome"
 						action="#{contatoMB.limpaFiltroConsulta()}" partialSubmit="true"
 						disabled="#{contatoMB.verificaTipoDeBusca() eq 0}" id="btnReset" />
 

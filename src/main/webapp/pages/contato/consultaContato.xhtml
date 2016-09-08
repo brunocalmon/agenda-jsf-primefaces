@@ -94,7 +94,7 @@ ui-widget-content ui-datatable-empty-message {
 
 					<p:column headerText="Ações">
 						<p:commandLink id="btnEditarContato"
-							action="#{contatoMB.editarContato(contato)}">
+							action="#{contatoMB.redirecionaParaEditarContato(contato)}">
 							<p:graphicImage id="imageEditarContato"
 								value="/resources/img/icon/file_edit.png" width="20" height="20" />
 							<p:tooltip id="toolEditar" for="btnEditarContato" value="Editar" />

@@ -24,18 +24,18 @@
 				<p:panelGrid columns="2">
 
 					<p:outputLabel value="Nome: " id="lblIncluirContatoNome" />
-					<p:inputText value="#{contatoMB.contato.noContato}" required="true"
+					<p:inputText value="#{contatoMB.contatoVisao.contato.noContato}" required="true"
 						requiredMessage="Insira o nome do contato."
 						id="inputIncluirContatoNome" />
 
 					<p:outputLabel value="Telefone: " id="lblIncluirContatoTelefone" />
-					<p:inputMask value="#{contatoMB.contato.nuTelefone}"
+					<p:inputMask value="#{contatoMB.contatoVisao.contato.nuTelefone}"
 						mask="(99) 9999-9999" required="true"
 						requiredMessage="Insira o número de telefone."
 						id="inputIncluirContatoTelefone" />
 
 					<p:commandButton action="#{contatoMB.incluirContato()}"
-						value="Incluir" ajax="false" id="btnConsultaContato" />
+						value="Incluir" ajax="false" id="btnIncluiContato" />
 
 					<p:commandButton value="Limpar"
 						update="inputIncluirContatoTelefone inputIncluirContatoNome"

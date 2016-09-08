@@ -42,9 +42,11 @@ public class ContatoMB extends GenericMB {
 	 */
 	@PostConstruct
 	public void init() {
-		if (ValidacoesContato.nullOrEmpty(getContato())) {
-			setContato(new Contato());
-		}
+		setContatoVisao((ContatoVisao) getFlash("contatoVisao"));
+
+		// if (ValidacoesContato.nullOrEmpty(getContato())) {
+		// setContato(new Contato());
+		// }
 		if (ValidacoesContato.nullOrEmpty(getContatoVisao())) {
 			setContatoVisao(new ContatoVisao());
 		}
@@ -60,13 +62,14 @@ public class ContatoMB extends GenericMB {
 	 * Persiste dados
 	 */
 	public void incluirContato() {
-		getContato().setNoContato(StringUtil.limpaEspacosVazios(getContato().getNoContato()));
-		getContato().setDtEntrada(new Date());
+		getContatoVisao().getContato()
+				.setNoContato(StringUtil.limpaEspacosVazios(getContatoVisao().getContato().getNoContato()));
+		getContatoVisao().getContato().setDtEntrada(new Date());
 
 		try {
-			ValidacoesContato.validaInclusaoContato(getContato());
-			contatoService.inserir(getContato());
-			exibirMsgSucesso("Contato " + getContato().getNoContato() + " adicionado com sucesso!");
+			ValidacoesContato.validaInclusaoContato(getContatoVisao().getContato());
+			contatoService.inserir(getContatoVisao().getContato());
+			exibirMsgSucesso("Contato " + getContatoVisao().getContato().getNoContato() + " adicionado com sucesso!");
 
 		} catch (AgendaException ae) {
 			exibirMsgErro(ae.getMessage());
@@ -74,7 +77,7 @@ public class ContatoMB extends GenericMB {
 		} catch (Exception e) {
 			LOGGER.info(e);
 		} finally {
-			setContato(new Contato());
+			getContatoVisao().setContato(new Contato());
 		}
 	}
 
@@ -90,6 +93,14 @@ public class ContatoMB extends GenericMB {
 			getContatoVisao()
 					.setListaResultadoContato(contatoService.buscarContatoPorTelefone(getContatoVisao().getContato()));
 		}
+	}
+
+	/**
+	 * 
+	 * @param contato
+	 */
+	public void editarContato(Contato contato) {
+		contatoService.atualizar(contato);
 	}
 
 	private void iniciaTipoBuscaContato() {
@@ -121,11 +132,12 @@ public class ContatoMB extends GenericMB {
 
 	/**
 	 * 
-	 * @param contato
-	 * @return
+	 * @param contatoVisao
+	 * @return String
 	 */
-	public String editarContato(Contato contato) {
-		setFlash("contato", contato);
+	public String redirecionaParaEditarContato(Contato contato) {
+		getContatoVisao().setContato(contato);
+		setFlash("contatoVisao", getContatoVisao());
 		return "/pages/contato/editarContato.xhtml";
 	}
 
