@@ -31,7 +31,7 @@ public class ContatoDAO extends DAO<Contato> {
 	public List<Contato> buscarContatoPorTelefone(Contato contato) {
 		StringBuilder sql = new StringBuilder("");
 		sql.append(" SELECT c FROM Contato c ");
-		sql.append(" WHERE c.nuTelefone = :telefone");
+		sql.append(" WHERE c.nuTelefone = :telefone ");
 		try {
 			Query query = em.createQuery(sql.toString());
 			query.setParameter("telefone", contato.getNuTelefone());

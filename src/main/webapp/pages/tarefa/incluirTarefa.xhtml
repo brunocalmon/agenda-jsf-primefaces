@@ -7,11 +7,11 @@
 	xmlns:p="http://primefaces.org/ui" template="/templates/main.xhtml">
 
 	<ui:define name="breadcrumb">
-		<h:form>
+		<h:form prependId="false">
 			<p:breadCrumb homeDisplay="false">
-				<p:menuitem value="Início" url="/" />
-				<p:menuitem value="Contato" />
-				<p:menuitem value="Incluir" url="/pages/contato/incluirContato.jsf" />
+				<p:menuitem value="Início" action="/pages/home/home.xhtml" />
+				<p:menuitem value="Tarefa" />
+				<p:menuitem value="Incluir" action="/pages/contato/incluirTarefa.jsf" />
 			</p:breadCrumb>
 		</h:form>
 	</ui:define>
@@ -23,14 +23,14 @@
 			<p:panel>
 				<p:panelGrid columns="2">
 					<p:outputLabel value="Titulo da tarefa: " />
-					<p:inputText value="#{tarefaBean.tarefa.noTarefa}" required="true"
+					<p:inputText value="#{tarefaMB.tarefa.noTarefa}" required="true"
 						requiredMessage="Insira um titulo para esta tarefa." />
 
 					<p:outputLabel value="Descrição da tarefa: " />
-					<p:inputMask value="#{tarefaBean.tarefa.deTarefa}" required="true"
+					<p:inputMask value="#{tarefaMB.tarefa.deTarefa}" required="true"
 						requiredMessage="Insira um corpo a esta tarefa." />
 
-					<p:commandButton action="#{tarefaBean.incluirTarefa()}"
+					<p:commandButton action="#{tarefaMB.incluirTarefa()}"
 						value="Incluir" ajax="false" />
 					<p:commandButton value="Limpar" type="reset" />
 

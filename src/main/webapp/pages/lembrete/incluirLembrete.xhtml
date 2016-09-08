@@ -7,32 +7,33 @@
 	xmlns:p="http://primefaces.org/ui" template="/templates/main.xhtml">
 
 	<ui:define name="breadcrumb">
-		<h:form>
+		<h:form prependId="false">
 			<p:breadCrumb homeDisplay="false">
-				<p:menuitem value="Início" url="/" />
-				<p:menuitem value="Contato" />
-				<p:menuitem value="Incluir" url="/pages/contato/incluirContato.jsf" />
+				<p:menuitem value="Início" action="/pages/home/home.xhtml" />
+				<p:menuitem value="Lembrete" />
+				<p:menuitem value="Incluir"
+					action="/pages/lembrete/incluirLembrete.jsf" />
 			</p:breadCrumb>
 		</h:form>
 	</ui:define>
 
 	<ui:define name="content">
 
-		<h:form prependId="false" id="formIncluirTarefa">
+		<h:form prependId="false" id="formIncluirLembrete">
 			<p:messages autoUpdate="true" />
 			<p:panel>
 				<p:panelGrid columns="2">
 					<p:outputLabel value="Titulo do Lembrete: " />
-					<p:inputText value="#{lembreteBean.lembrete.noLembrete}"
+					<p:inputText value="#{lembreteMB.lembrete.noLembrete}"
 						required="true"
 						requiredMessage="Insira um titulo para este lembrete." />
 
 					<p:outputLabel value="Descrição do lembrete: " />
-					<p:inputMask value="#{lembreteBean.lembrete.deLembrete}"
+					<p:inputMask value="#{lembreteMB.lembrete.deLembrete}"
 						required="true"
 						requiredMessage="Insira um corpo p/ este lembrete." />
 
-					<p:commandButton action="#{lembreteBean.incluirLembrete()}"
+					<p:commandButton action="#{lembreteMB.incluirLembrete()}"
 						value="Incluir" ajax="false" />
 					<p:commandButton value="Limpar" type="reset" />
 

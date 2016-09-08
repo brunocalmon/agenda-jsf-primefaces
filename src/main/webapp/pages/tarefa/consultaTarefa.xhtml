@@ -5,6 +5,18 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui" template="/templates/main.xhtml">
+
+	<ui:define name="breadcrumb">
+		<h:form prependId="false">
+			<p:breadCrumb homeDisplay="false">
+				<p:menuitem value="Início" action="/pages/home/home.xhtml" />
+				<p:menuitem value="Tarefa" />
+				<p:menuitem value="Consulta"
+					action="/pages/tarefa/consultaTarefa.jsf" />
+			</p:breadCrumb>
+		</h:form>
+	</ui:define>
+
 	<ui:define name="content">
 	</ui:define>
 

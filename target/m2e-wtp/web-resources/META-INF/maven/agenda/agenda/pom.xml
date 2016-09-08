@@ -78,9 +78,19 @@
 				<scope>import</scope>
 			</dependency>
 		</dependencies>
+
 	</dependencyManagement>
 
 	<dependencies>
+
+
+
+		<!-- TEMA PRIMEFACES -->
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>all-themes</artifactId>
+			<version>1.0.10</version>
+		</dependency>
 
 		<!-- First declare the APIs we depend on and need for compilation. All 
 			of them are provided by JBoss EAP 6 -->
@@ -194,6 +204,12 @@
 			<version>6.0</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+		</dependency>
 
 
 	</dependencies>

@@ -1,4 +1,4 @@
-package br.com.agenda.bean;
+package br.com.agenda.mb;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.jboss.logging.Logger;
@@ -15,16 +16,17 @@ import br.com.agenda.entity.Contato;
 import br.com.agenda.enums.TipoBuscaContatoEnum;
 import br.com.agenda.exceptions.AgendaException;
 import br.com.agenda.service.ContatoService;
+import br.com.agenda.util.StringUtil;
 import br.com.agenda.validacoes.ValidacoesContato;
 import br.com.agenda.visao.ContatoVisao;
 
 @ViewScoped
-@ManagedBean(name = "contatoBean")
-public class ContatoBean extends GenericBean {
+@ManagedBean()
+public class ContatoMB extends GenericMB {
 
 	private static final long serialVersionUID = -4127295858936642247L;
 
-	private static final Logger LOGGER = Logger.getLogger(ContatoBean.class);
+	private static final Logger LOGGER = Logger.getLogger(ContatoMB.class);
 
 	@EJB
 	private ContatoService contatoService;
@@ -48,7 +50,7 @@ public class ContatoBean extends GenericBean {
 	}
 
 	public void incluirContato() {
-		getContato().setNoContato(limpaEspacosVazios(getContato().getNoContato()));
+		getContato().setNoContato(StringUtil.limpaEspacosVazios(getContato().getNoContato()));
 		getContato().setDtEntrada(new Date());
 
 		try {
@@ -67,10 +69,12 @@ public class ContatoBean extends GenericBean {
 
 	public void consultaContato() {
 		if (getContatoVisao().getTipoBuscaContatoSelecionado().equals(TipoBuscaContatoEnum.NOME.getId())) {
-			getContatoVisao().setListaResultadoContato(contatoService.buscarContatoPorNome(getContatoVisao().getContato()));
+			getContatoVisao()
+					.setListaResultadoContato(contatoService.buscarContatoPorNome(getContatoVisao().getContato()));
 		}
 		if (getContatoVisao().getTipoBuscaContatoSelecionado().equals(TipoBuscaContatoEnum.TELEFONE.getId())) {
-			getContatoVisao().setListaResultadoContato(contatoService.buscarContatoPorTelefone(getContatoVisao().getContato()));
+			getContatoVisao()
+					.setListaResultadoContato(contatoService.buscarContatoPorTelefone(getContatoVisao().getContato()));
 		}
 	}
 
@@ -92,6 +96,23 @@ public class ContatoBean extends GenericBean {
 			}
 		}
 		return 0;
+	}
+
+	/**
+	 * 
+	 * @param contato
+	 * @return
+	 */
+	public String editarContato(Contato contato) {
+		setFlash("contato", contato);
+		return "/pages/contato/editarContato.xhtml";
+	}
+
+	/**
+	 * <p>Limpa filtro</p>
+	 */
+	public void limpaFiltroConsulta() {
+		contatoVisao.setContato(new Contato());
 	}
 
 	public Contato getContato() {

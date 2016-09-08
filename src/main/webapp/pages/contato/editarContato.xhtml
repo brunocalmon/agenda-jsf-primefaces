@@ -39,8 +39,7 @@
 
 					<p:commandButton value="Limpar"
 						update="inputIncluirContatoTelefone inputIncluirContatoNome"
-						actionListener="#{contatoMB.limpaFiltroConsulta()}"
-						partialSubmit="true"
+						action="#{contatoMB.limpaFiltroConsulta()}" partialSubmit="true"
 						disabled="#{contatoMB.verificaTipoDeBusca() eq 0}" id="btnReset" />
 
 				</p:panelGrid>

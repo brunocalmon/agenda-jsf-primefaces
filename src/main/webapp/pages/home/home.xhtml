@@ -7,6 +7,12 @@
 	xmlns:p="http://primefaces.org/ui" template="/templates/main.xhtml">
 	<ui:define name="content">
 
+		<h:form prependId="false">
+			<p:breadCrumb homeDisplay="false">
+				<p:menuitem value="Início" action="/pages/home/home.xhtml" />
+			</p:breadCrumb>
+		</h:form>
+
 		<h:form prependId="false" id="formHome">
 			<h:outputLabel value="Bem-Vindo à agenda." style="font-size:2em" />
 		</h:form>
