@@ -32,9 +32,13 @@ public class ContatoMB extends GenericMB {
 
 	private static final Logger LOGGER = Logger.getLogger(ContatoMB.class);
 
+	private static final String PAGE_EDITA_CONTATO = "/pages/contato/editarContato.xhtml";
+	private static final String PAGE_CONSULTA_CONTATO = "/pages/contato/consultaContato.jsf";
+
+	private static final String CONTATO_VISAO = "contatoVisao";
+
 	@EJB
 	private ContatoService contatoService;
-	private Contato contato;
 	private ContatoVisao contatoVisao;
 
 	/**
@@ -42,19 +46,18 @@ public class ContatoMB extends GenericMB {
 	 */
 	@PostConstruct
 	public void init() {
-		setContatoVisao((ContatoVisao) getFlash("contatoVisao"));
+		this.setContatoVisao((ContatoVisao) super.getFlash(CONTATO_VISAO));
 
-		// if (ValidacoesContato.nullOrEmpty(getContato())) {
-		// setContato(new Contato());
-		// }
-		if (ValidacoesContato.nullOrEmpty(getContatoVisao())) {
-			setContatoVisao(new ContatoVisao());
+		if (ValidacoesContato.nullOrEmpty(this.getContatoVisao())) {
+			this.setContatoVisao(new ContatoVisao());
+		} else {
+			super.setFlash(CONTATO_VISAO, this.getContatoVisao());
 		}
-		if (ValidacoesContato.nullOrEmpty(getContatoVisao().getContato())) {
-			getContatoVisao().setContato(new Contato());
+		if (ValidacoesContato.nullOrEmpty(this.getContatoVisao().getContato())) {
+			this.getContatoVisao().setContato(new Contato());
 		}
-		if (ValidacoesContato.nullOrEmpty(getContatoVisao().getTipoBuscaContato())) {
-			iniciaTipoBuscaContato();
+		if (ValidacoesContato.nullOrEmpty(this.getContatoVisao().getTipoBuscaContato())) {
+			this.iniciaTipoBuscaContato();
 		}
 	}
 
@@ -62,35 +65,33 @@ public class ContatoMB extends GenericMB {
 	 * Persiste dados
 	 */
 	public void incluirContato() {
-		getContatoVisao().getContato()
-				.setNoContato(StringUtil.limpaEspacosVazios(getContatoVisao().getContato().getNoContato()));
-		getContatoVisao().getContato().setDtEntrada(new Date());
+		this.getContatoVisao().getContato()
+				.setNoContato(StringUtil.limpaEspacosVazios(this.getContatoVisao().getContato().getNoContato()));
+		this.getContatoVisao().getContato().setDtEntrada(new Date());
 
 		try {
-			ValidacoesContato.validaInclusaoContato(getContatoVisao().getContato());
-			contatoService.inserir(getContatoVisao().getContato());
-			exibirMsgSucesso("Contato " + getContatoVisao().getContato().getNoContato() + " adicionado com sucesso!");
+			ValidacoesContato.validaInclusaoContato(this.getContatoVisao().getContato());
+			contatoService.inserir(this.getContatoVisao().getContato());
+			super.exibirMsgSucesso(
+					"Contato " + this.getContatoVisao().getContato().getNoContato() + " adicionado com sucesso!");
 
 		} catch (AgendaException ae) {
-			exibirMsgErro(ae.getMessage());
+			super.exibirMsgErro(ae.getMessage());
 			LOGGER.info(ae);
-		} catch (Exception e) {
-			LOGGER.info(e);
-		} finally {
-			getContatoVisao().setContato(new Contato());
 		}
+		this.getContatoVisao().setContato(new Contato());
 	}
 
 	/**
 	 * Faz consulta
 	 */
 	public void consultaContato() {
-		if (getContatoVisao().getTipoBuscaContatoSelecionado().equals(TipoBuscaContatoEnum.NOME.getId())) {
-			getContatoVisao()
+		if (this.getContatoVisao().getTipoBuscaContatoSelecionado().equals(TipoBuscaContatoEnum.NOME.getId())) {
+			this.getContatoVisao()
 					.setListaResultadoContato(contatoService.buscarContatoPorNome(getContatoVisao().getContato()));
 		}
-		if (getContatoVisao().getTipoBuscaContatoSelecionado().equals(TipoBuscaContatoEnum.TELEFONE.getId())) {
-			getContatoVisao()
+		if (this.getContatoVisao().getTipoBuscaContatoSelecionado().equals(TipoBuscaContatoEnum.TELEFONE.getId())) {
+			this.getContatoVisao()
 					.setListaResultadoContato(contatoService.buscarContatoPorTelefone(getContatoVisao().getContato()));
 		}
 	}
@@ -98,15 +99,32 @@ public class ContatoMB extends GenericMB {
 	/**
 	 * 
 	 * @param contato
+	 * @return PAGE_CONSULTA_CONTATO
 	 */
-	public void editarContato(Contato contato) {
-		contatoService.atualizar(contato);
+	public String editarContato() {
+		try {
+			ValidacoesContato.validaEdicaoContato(this.getContatoVisao().getContato());
+			contatoService.atualizar(this.getContatoVisao().getContato());
+			super.exibirMsgSucesso(
+					"Contato " + this.getContatoVisao().getContato().getNoContato() + " atualizado com sucesso!");
+		} catch (AgendaException ae) {
+			super.exibirMsgErro(ae.getMessage());
+			LOGGER.info(ae);
+		}
+		return PAGE_CONSULTA_CONTATO;
+	}
+
+	/**
+	 * Exclui contato
+	 */
+	public void excluirContato() {
+		contatoService.remover(this.getContatoVisao().getContato());
 	}
 
 	private void iniciaTipoBuscaContato() {
-		getContatoVisao().setTipoBuscaContato(new ArrayList<SelectItem>());
+		this.getContatoVisao().setTipoBuscaContato(new ArrayList<SelectItem>());
 		for (TipoBuscaContatoEnum e : TipoBuscaContatoEnum.values()) {
-			getContatoVisao().getTipoBuscaContato().add(new SelectItem(e.getId(), e.getValor()));
+			this.getContatoVisao().getTipoBuscaContato().add(new SelectItem(e.getId(), e.getValor()));
 		}
 	}
 
@@ -117,8 +135,8 @@ public class ContatoMB extends GenericMB {
 	 */
 	public int verificaTipoDeBusca() {
 
-		if (null != getContatoVisao().getTipoBuscaContatoSelecionado()) {
-			switch (getContatoVisao().getTipoBuscaContatoSelecionado()) {
+		if (null != this.getContatoVisao().getTipoBuscaContatoSelecionado()) {
+			switch (this.getContatoVisao().getTipoBuscaContatoSelecionado()) {
 			case 1:
 				return 1;
 			case 2:
@@ -136,9 +154,9 @@ public class ContatoMB extends GenericMB {
 	 * @return String
 	 */
 	public String redirecionaParaEditarContato(Contato contato) {
-		getContatoVisao().setContato(contato);
-		setFlash("contatoVisao", getContatoVisao());
-		return "/pages/contato/editarContato.xhtml";
+		this.getContatoVisao().setContato(contato);
+		super.setFlash(CONTATO_VISAO, this.getContatoVisao());
+		return PAGE_EDITA_CONTATO;
 	}
 
 	/**
@@ -147,15 +165,7 @@ public class ContatoMB extends GenericMB {
 	 * </p>
 	 */
 	public void limpaFiltroConsulta() {
-		contatoVisao.setContato(new Contato());
-	}
-
-	public Contato getContato() {
-		return contato;
-	}
-
-	public void setContato(Contato contato) {
-		this.contato = contato;
+		this.getContatoVisao().setContato(new Contato());
 	}
 
 	public ContatoVisao getContatoVisao() {

@@ -27,7 +27,7 @@ ui-widget-content ui-datatable-empty-message {
 		<h:form prependId="false" id="buscaContatoForm">
 			<p:messages autoUpdate="true" id="messages" />
 			<p:panel id="buscaContatoPanel">
-				<p:panelGrid columns="2">
+				<p:panelGrid columns="2" style="border: none;">
 
 					<p:outputLabel value="Buscar Por: " id="lblTipoBuscaContato" />
 					<p:selectOneMenu id="tipoBuscaContato"
@@ -68,13 +68,20 @@ ui-widget-content ui-datatable-empty-message {
 				</p:panelGrid>
 			</p:panel>
 
-			<p:panel id="relatorioContatoPanel">
+			<p:panel id="relatorioContatoPanel" style="border:none;">
 				<p:dataTable var="contato"
 					value="#{contatoMB.contatoVisao.listaResultadoContato}"
 					emptyMessage="Nenhum Resultado Encontrado">
 
-					<p:column headerText="Id" sortBy="#{contato.nuContato}">
-						<h:outputText value="#{contato.nuContato}" />
+					<!-- 					<p:column headerText="Id" sortBy="#{contato.nuContato}"> -->
+					<!-- 						<h:outputText value="#{contato.nuContato}" /> -->
+					<!-- 					</p:column> -->
+
+					<p:column headerText="Entrada" sortBy="#{contato.dtEntrada}">
+						<h:outputText value="#{contato.dtEntrada}">
+							<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+								timeZone="America/Sao_Paulo" />
+						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Nome" sortBy="#{contato.noContato}">
@@ -85,12 +92,6 @@ ui-widget-content ui-datatable-empty-message {
 						<h:outputText value="#{contato.nuTelefone}"
 							converter="telefoneConverter" />
 					</p:column>
-					<p:column headerText="Entrada" sortBy="#{contato.dtEntrada}">
-						<h:outputText value="#{contato.dtEntrada}">
-							<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
-								timeZone="America/Sao_Paulo" />
-						</h:outputText>
-					</p:column>
 
 					<p:column headerText="Ações">
 						<p:commandLink id="btnEditarContato"
@@ -98,6 +99,13 @@ ui-widget-content ui-datatable-empty-message {
 							<p:graphicImage id="imageEditarContato"
 								value="/resources/img/icon/file_edit.png" width="20" height="20" />
 							<p:tooltip id="toolEditar" for="btnEditarContato" value="Editar" />
+						</p:commandLink>
+
+						<p:commandLink id="btnExcluirContato"
+							action="#{contatoMB.excluirContato(contato)}">
+							<p:graphicImage id="imageExcluirContato"
+								value="/resources/img/icon/excluir.png" width="20" height="20" />
+							<p:tooltip id="toolExcluir" for="btnExcluirContato" value="Excluir" />
 						</p:commandLink>
 					</p:column>
 
