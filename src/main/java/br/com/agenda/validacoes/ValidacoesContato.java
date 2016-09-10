@@ -29,4 +29,22 @@ public abstract class ValidacoesContato extends Validacoes {
 			throw new AgendaException("Campo telefone não pode estar vazio");
 		}
 	}
+
+	/**
+	 * 
+	 * @param contato
+	 * @throws AgendaException
+	 */
+	public static void validaEdicaoContato(Contato contato) throws AgendaException {
+		validaInclusaoContato(contato);
+
+		if (nullOrEmpty(contato.getNuContato())) {
+			throw new AgendaException("Houve uma falha ao tentar atualizar o contato " + contato.getNoContato()
+					+ ". <br/>Contate o suporte ou tente novamente mais tarde.");
+		}
+		if (nullOrEmpty(contato.getDtEntrada())) {
+			throw new AgendaException("Houve uma falha ao tentar atualizar o contato " + contato.getNoContato()
+					+ ". <br/>Contate o suporte ou tente novamente mais tarde.");
+		}
+	}
 }

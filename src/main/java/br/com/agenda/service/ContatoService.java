@@ -33,7 +33,7 @@ public class ContatoService implements Serializable {
 		contato.setNuTelefone(StringUtil.desformatString("(##) ####-####", contato.getNuTelefone()));
 		contatoDAO.inserir(contato);
 	}
-	
+
 	/**
 	 * 
 	 * @param contato
@@ -41,6 +41,14 @@ public class ContatoService implements Serializable {
 	public void atualizar(Contato contato) {
 		contato.setNuTelefone(StringUtil.desformatString("(##) ####-####", contato.getNuTelefone()));
 		contatoDAO.atualizar(contato);
+	}
+	
+	/**
+	 * 
+	 * @param contato
+	 */
+	public void remover(Contato contato) {
+		contatoDAO.remover(contato);
 	}
 
 	/**
@@ -62,5 +70,5 @@ public class ContatoService implements Serializable {
 				contato.getNuTelefone().replace("(", "").replace(")", "").replace("-", "").replace(" ", ""));
 		return contatoDAO.buscarContatoPorTelefone(contato);
 	}
-
+	
 }
