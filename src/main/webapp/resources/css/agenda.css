@@ -1,0 +1,150 @@
+@CHARSET "ISO-8859-1";
+
+/*   HEADER */
+.clearfix {
+	overflow: auto;
+	zoom: 1;
+}
+
+.float-left {
+	float: left;
+}
+
+.float-right {
+	float: right;
+}
+
+.float-none {
+	float: none;
+}
+
+.border-none {
+	border: none;
+}
+
+.ui-panelgrid .ui-panelgrid-cell {
+	border: none !important;
+}
+
+.ui-panelgrid {
+	border-collapse: initial;
+}
+
+#bannerHeader {
+	width: 100%;
+	height: 46%;
+	background: url("#{resource['/img/banner-agenda-sel.jpg']}") 0px -20px;
+	background-size: 1904px 450px;
+	background-repeat: repeat-x;
+	display: block;
+	margin-bottom: -35px;
+	margin-top: -25px;
+}
+
+#navbarAgenda {
+	margin-bottom: -22px;
+	font-weight: normal;
+}
+
+.ui-breadcrumb {
+	font-size: 0.9em;
+	padding: 4px 5px 5px 5px;
+	font-stretch: condensed;
+	font-weight: normal;
+}
+
+.ui-widget-header {
+	background: #6f3e53 url("") 0% 0% !important;
+}
+
+.ui-icon {
+	-webkit-filter: hue-rotate(45deg);
+	filter: hue-rotate(45deg);
+}
+
+body form:nth-child(4) {
+	border: 1px #6f3e53 solid;
+	border-radius: 5px;
+	box-shadow: 0px 0px 5px grey;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#dataTable_paginator_top, #dataTable_paginator_bottom {
+	background: transparent url("") 0% 0% !important;
+	border: none !important;
+}
+
+/*	agenda */
+.tabelaIncluir {
+	display: inline;
+}
+
+.tabelaEditar {
+	display: inline;
+}
+
+textarea {
+	width: 227px !important;
+}
+
+#dataTable_data {
+	text-align: center;
+}
+
+.colAcoes {
+	width: 40px;
+}
+
+.left-50 {
+	left: 50%;
+}
+
+/*	contato */
+#tabelaContatos {
+	display: inline;
+}
+
+#btnNovoContato {
+	float: right;
+}
+
+#btnNovoContato img {
+	height: 80px;
+}
+
+#tipoBuscaContato_label {
+	width: 182px !important;
+}
+
+/*	tarefa */
+#tabelaTarefas {
+	display: inline;
+}
+
+#btnNovoTarefa {
+	float: right;
+}
+
+#btnNovoTarefa	img {
+	height: 80px;
+}
+
+/*	lembrete */
+#tabelaLembretes {
+	display: inline;
+}
+
+#btnNovoLembrete {
+	float: right;
+}
+
+#btnNovoLembrete	img {
+	height: 80px;
+}
+
+#buscaContatoPanel_content, #buscaTarefaPanel_content,
+	#buscaLembretePanel_content {
+	width: 550px;
+	margin: 0 auto;
+}

@@ -9,7 +9,7 @@ import br.com.agenda.exceptions.AgendaException;
  *
  */
 public class ValidacoesLembrete extends Validacoes {
-	
+
 	/**
 	 * 
 	 * @param lembrete
@@ -19,12 +19,29 @@ public class ValidacoesLembrete extends Validacoes {
 		if (nullOrEmpty(lembrete.getNoLembrete())) {
 			throw new AgendaException("Campo não pode ser vazio.");
 		}
-		if (lembrete.getNoLembrete().length() < DEZ) {
-			throw new AgendaException("Nome muito curto, precisa ser mais que 10");
+		if (lembrete.getNoLembrete().length() < TRES) {
+			throw new AgendaException("Nome da lembrete muito curta, precisa ser maior que 3");
 		}
-		if (lembrete.getDeLembrete().length() < CINQUENTA) {
-			throw new AgendaException("Nome muito curto, precisa ser mais que 10");
+		if (lembrete.getDeLembrete().length() < DEZ) {
+			throw new AgendaException("Descrição de lembrete muito curta, precisa ser maior que 10");
 		}
 	}
 	
+	/**
+	 * 
+	 * @param contato
+	 * @throws AgendaException
+	 */
+	public static void validaEdicaoLembrete(Lembrete lembrete) throws AgendaException {
+		validaInclusaoLembrete(lembrete);
+
+		if (nullOrEmpty(lembrete.getNuLembrete())) {
+			throw new AgendaException("Houve uma falha ao tentar atualizar a lembrete " + lembrete.getNoLembrete()
+					+ ". Contate o suporte ou tente novamente mais tarde.");
+		}
+		if (nullOrEmpty(lembrete.getDtLembrete())) {
+			throw new AgendaException("Houve uma falha ao tentar atualizar o lembrete " + lembrete.getNoLembrete()
+					+ ". Contate o suporte ou tente novamente mais tarde.");
+		}
+	}
 }

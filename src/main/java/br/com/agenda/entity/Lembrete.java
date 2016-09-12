@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 
@@ -13,6 +14,7 @@ import javax.persistence.Id;
  *
  */
 @Entity
+@Table(name = "lembrete", schema = "public")
 public class Lembrete {
 
 	@Id
@@ -23,7 +25,7 @@ public class Lembrete {
 	@Column(name = "no_lembrete")
 	private String noLembrete;
 
-	@Column(name = "de_lembrete")
+	@Column(name = "de_lembrete", length=1000)
 	private String deLembrete;
 
 	@Column(name = "dt_lembrete")

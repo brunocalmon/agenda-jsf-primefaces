@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import br.com.agenda.enums.PageEnum;
+
 /**
  * 
  * @author bruno.calmon

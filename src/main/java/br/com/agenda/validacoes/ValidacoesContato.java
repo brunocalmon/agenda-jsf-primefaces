@@ -40,11 +40,11 @@ public abstract class ValidacoesContato extends Validacoes {
 
 		if (nullOrEmpty(contato.getNuContato())) {
 			throw new AgendaException("Houve uma falha ao tentar atualizar o contato " + contato.getNoContato()
-					+ ". <br/>Contate o suporte ou tente novamente mais tarde.");
+					+ ". Contate o suporte ou tente novamente mais tarde.");
 		}
 		if (nullOrEmpty(contato.getDtEntrada())) {
 			throw new AgendaException("Houve uma falha ao tentar atualizar o contato " + contato.getNoContato()
-					+ ". <br/>Contate o suporte ou tente novamente mais tarde.");
+					+ ". Contate o suporte ou tente novamente mais tarde.");
 		}
 	}
 }

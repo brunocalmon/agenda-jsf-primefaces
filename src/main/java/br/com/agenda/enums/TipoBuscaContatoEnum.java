@@ -10,12 +10,12 @@ public enum TipoBuscaContatoEnum {
 
 	private Integer id;
 	private String valor;
-	
+
 	private TipoBuscaContatoEnum(Integer id, String valor) {
 		this.id = id;
 		this.valor = valor;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}

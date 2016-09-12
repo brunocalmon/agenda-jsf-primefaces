@@ -71,4 +71,8 @@ public class ContatoService implements Serializable {
 		return contatoDAO.buscarContatoPorTelefone(contato);
 	}
 	
+	public List<Contato> buscarTodosContatos(Contato contato) {
+		return contatoDAO.buscarTodos(contato);
+	}
+	
 }

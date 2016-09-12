@@ -22,7 +22,7 @@ import br.com.agenda.entity.Contato;
 public class ContatoDAO extends DAO<Contato> {
 
 	private static final Logger LOGGER = Logger.getLogger(DAO.class);
-	
+
 	/**
 	 * 
 	 * @param contato
@@ -63,4 +63,24 @@ public class ContatoDAO extends DAO<Contato> {
 		}
 	}
 
+	@Override
+	public void remover(Contato contato) {
+		StringBuilder sql = new StringBuilder("");
+		sql.append(" SELECT e FROM " + contato.getClass().getName() + " e ");
+		sql.append(" WHERE e.nuContato = :id ");
+		try {
+			Query query = em.createQuery(sql.toString());
+			query.setParameter("id", contato.getNuContato());
+			if (!query.getResultList().isEmpty()) {
+				sql = new StringBuilder("");
+				sql.append(" DELETE FROM " + contato.getClass().getName() + " e");
+				sql.append(" WHERE e.nuContato = " + contato.getNuContato());
+				query = em.createQuery(sql.toString());
+				query.executeUpdate();
+			}
+		} catch (NoResultException e) {
+			LOGGER.info(e);
+		}
+
+	}
 }

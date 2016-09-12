@@ -7,71 +7,22 @@
 	xmlns:p="http://primefaces.org/ui">
 	<f:facet name="header" />
 
-	<style type="text/css">
-#bannerHeader {
-	width: 1350px;
-	height: 317px;
-	background: url("#{resource['/img/banner-agenda-sel.jpg']}") 0px -20px;
-	background-size: 100% 100%;
-	background-repeat: repeat-x;
-	display: block;
-	margin-bottom: -35px;
-	margin-top: -25px;
-}
-
-#navbarAgenda {
-	margin-bottom: -22px;
-	font-weight: normal;
-}
-
-.ui-breadcrumb {
-	font-size: 0.9em;
-	padding: 4px 5px 5px 5px;
-	font-stretch: condensed;
-	font-weight: normal;
-}
-
-.ui-widget-header {
-	background: #6f3e53 url("") 0% 0% !important;
-}
-
-.ui-icon {
-	-webkit-filter : hue-rotate(45deg);
-    filter : hue-rotate(45deg);
-}
-
-body form:nth-child(4) {
-	border: 1px #6f3e53 solid;
-	border-radius: 5px;
-	box-shadow: 0px 0px 5px grey;
-	text-align: center;
-	vertical-align: middle;
-}
-</style>
-
 	<h:form id="menu-navbar" prependId="false">
 
-		<div id="bannerHeader">Agenda</div>
+		<div id="bannerHeader" />
 
 		<p:menubar id="navbarAgenda">
 			<p:menuitem id="menuHome" value="#{msg['lbl.home']}"
 				action="/pages/home/home.xhtml" />
-			<p:submenu label="#{msg['lbl.contatos']}">
-				<p:menuitem value="#{msg['lbl.incluir']}"
-					action="/pages/contato/incluirContato.jsf" />
-				<p:menuitem value="#{msg['lbl.consultar']}"
-					action="/pages/contato/consultaContato.jsf" />
-			</p:submenu>
-			<p:submenu label="#{msg['lbl.tarefas']}">
-				<p:menuitem value="#{msg['lbl.incluir']}"
-					action="/pages/tarefa/incluirTarefa.jsf" />
-				<p:menuitem value="#{msg['lbl.consultar']}" />
-			</p:submenu>
-			<p:submenu label="#{msg['lbl.lembretes']}">
-				<p:menuitem value="#{msg['lbl.incluir']}"
-					action="/pages/lembrete/incluirLembrete.jsf" />
-				<p:menuitem value="#{msg['lbl.consultar']}" />
-			</p:submenu>
+
+			<p:menuitem id="menuContato" value="#{msg['lbl.contatos']}"
+				action="#{contatoMB.redirecionaParaConsultarContato()}" />
+
+			<p:menuitem id="menuTarefa" value="#{msg['lbl.tarefas']}"
+				action="#{tarefaMB.redirecionaParaConsultarTarefa()}" />
+
+			<p:menuitem id="menuLembrete" value="#{msg['lbl.lembretes']}"
+				action="#{lembreteMB.redirecionaParaConsultarLembrete()}" />
 		</p:menubar>
 	</h:form>
 

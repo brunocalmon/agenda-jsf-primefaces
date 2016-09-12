@@ -6,12 +6,6 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui" template="/templates/main.xhtml">
 
-	<style>
-ui-widget-content ui-datatable-empty-message {
-	text-align: center !important;
-}
-</style>
-
 	<ui:define name="breadcrumb">
 		<h:form prependId="false" id="breadCrumbsForm">
 			<p:breadCrumb homeDisplay="false" id="breadCrumb">
@@ -26,8 +20,9 @@ ui-widget-content ui-datatable-empty-message {
 	<ui:define name="content">
 		<h:form prependId="false" id="buscaContatoForm">
 			<p:messages autoUpdate="true" id="messages" />
-			<p:panel id="buscaContatoPanel">
-				<p:panelGrid columns="2" style="border: none;">
+			<p:panel id="buscaContatoPanel" styleClass="clearfix">
+				<p:panelGrid id="tabelaContatos" columns="2"
+					styleClass="border-none">
 
 					<p:outputLabel value="Buscar Por: " id="lblTipoBuscaContato" />
 					<p:selectOneMenu id="tipoBuscaContato"
@@ -60,18 +55,31 @@ ui-widget-content ui-datatable-empty-message {
 						value="Buscar" ajax="false"
 						disabled="#{contatoMB.verificaTipoDeBusca() eq 0}"
 						id="btnConsultaContato" />
+
 					<p:commandButton value="Limpar"
 						update="inputConsultaContatoTelefone inputConsultaContatoNome"
-						action="#{contatoMB.limpaFiltroConsulta()}" partialSubmit="true"
+						action="#{contatoMB.limpaFiltroContato()}" partialSubmit="true"
 						immediate="true" process="@this"
-						disabled="#{contatoMB.verificaTipoDeBusca() eq 0}" id="btnReset" />
+						disabled="#{contatoMB.verificaTipoDeBusca() eq 0}" id="btnReset"
+						styleClass="float-right" />
+
 				</p:panelGrid>
+
+				<p:commandLink id="btnNovoContato"
+					action="/pages/contato/incluirContato.jsf" immediate="true">
+					<p:graphicImage id="imageNovoContato"
+						value="/resources/img/icon/add-icon.png" />
+					<p:tooltip id="toolNovo" for="btnNovoContato" value="Novo" />
+				</p:commandLink>
+
 			</p:panel>
 
-			<p:panel id="relatorioContatoPanel" style="border:none;">
+			<p:panel id="relatorioContatoPanel" styleClass="border-none">
 				<p:dataTable var="contato"
 					value="#{contatoMB.contatoVisao.listaResultadoContato}"
-					emptyMessage="Nenhum Resultado Encontrado">
+					emptyMessage="Nenhum Resultado Encontrado" paginator="true"
+					paginatorPosition="bottom" rows="10" id="dataTable"
+					sortBy="#{contato.dtEntrada}">
 
 					<!-- 					<p:column headerText="Id" sortBy="#{contato.nuContato}"> -->
 					<!-- 						<h:outputText value="#{contato.nuContato}" /> -->
@@ -93,19 +101,24 @@ ui-widget-content ui-datatable-empty-message {
 							converter="telefoneConverter" />
 					</p:column>
 
-					<p:column headerText="Ações">
+					<p:column headerText="Ações" style="width:40px">
 						<p:commandLink id="btnEditarContato"
-							action="#{contatoMB.redirecionaParaEditarContato(contato)}">
+							action="#{contatoMB.redirecionaParaEditarContato(contato)}"
+							immediate="true">
 							<p:graphicImage id="imageEditarContato"
-								value="/resources/img/icon/file_edit.png" width="20" height="20" />
+								value="/resources/img/icon/editar-icon.png" width="20"
+								height="20" />
 							<p:tooltip id="toolEditar" for="btnEditarContato" value="Editar" />
 						</p:commandLink>
 
 						<p:commandLink id="btnExcluirContato"
-							action="#{contatoMB.excluirContato(contato)}">
+							action="#{contatoMB.excluirContato(contato)}" update="dataTable"
+							immediate="true">
 							<p:graphicImage id="imageExcluirContato"
-								value="/resources/img/icon/excluir.png" width="20" height="20" />
-							<p:tooltip id="toolExcluir" for="btnExcluirContato" value="Excluir" />
+								value="/resources/img/icon/remove-icon.png" width="20"
+								height="20" />
+							<p:tooltip id="toolExcluir" for="btnExcluirContato"
+								value="Excluir" />
 						</p:commandLink>
 					</p:column>
 
@@ -113,4 +126,5 @@ ui-widget-content ui-datatable-empty-message {
 			</p:panel>
 		</h:form>
 	</ui:define>
+
 </ui:composition>

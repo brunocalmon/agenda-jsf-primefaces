@@ -8,45 +8,44 @@
 
 	<ui:define name="breadcrumb">
 		<h:form prependId="false" id="breadCrumbsForm">
-			<p:breadCrumb homeDisplay="false">
+			<p:breadCrumb homeDisplay="false" id="breadCrumb">
 				<p:menuitem value="Início" action="/pages/home/home.xhtml" />
 				<p:menuitem value="Tarefa" />
-				<p:menuitem value="Incluir" action="/pages/tarefa/incluirTarefa.jsf" />
+				<p:menuitem value="Editar" action="/pages/tarefa/editarTarefa.jsf" />
 			</p:breadCrumb>
 		</h:form>
 	</ui:define>
 
 	<ui:define name="content">
-		<h:form prependId="false" id="formIncluirTarefa">
+		<h:form prependId="false" id="formEditarTarefa">
 			<p:messages autoUpdate="true" />
 			<p:panel styleClass="clearfix">
-				<p:panelGrid columns="2" styleClass="tabelaIncluir">
+				<p:panelGrid columns="2" styleClass="tabelaEditar">
 
-					<p:outputLabel value="Titulo da tarefa: " />
+					<p:outputLabel value="Nome: " id="lblEditarTarefaNome" />
 					<p:inputText value="#{tarefaMB.tarefaVisao.tarefa.noTarefa}"
-						required="true"
-						requiredMessage="Insira um titulo para esta tarefa."
-						id="inputIncluirTarefaNome" />
+						required="true" requiredMessage="Insira o nome do tarefa."
+						id="inputEditarTarefaNome" />
 
-					<p:outputLabel value="Descrição da tarefa: " />
+					<p:outputLabel value="Telefone: " id="lblEditarTarefaTelefone" />
 					<p:inputTextarea value="#{tarefaMB.tarefaVisao.tarefa.deTarefa}"
-						required="true" requiredMessage="Insira um corpo a esta tarefa."
-						id="inputIncluirTarefaDesc" />
+						required="true" requiredMessage="Insira um corpo para tarefa."
+						id="inputEditarTarefaDesc" />
 
-					<p:commandButton action="#{tarefaMB.incluirTarefa()}"
-						value="Incluir" ajax="false" />
+					<p:commandButton action="#{tarefaMB.editarTarefa()}" value="Editar"
+						ajax="false" id="btnEditaTarefa" />
 
 					<p:commandButton value="Limpar"
-						update="inputIncluirTarefaNome inputIncluirTarefaDesc"
-						actionListener="#{tarefaMB.limpaFiltroTarefa()}"
-						partialSubmit="true" id="btnReset" styleClass="float-right" />
+						update="inputEditarTarefaDesc inputEditarTarefaNome"
+						action="#{tarefaMB.limpaFiltroTarefa()}" partialSubmit="true"
+						id="btnReset" styleClass="float-right" />
 
 				</p:panelGrid>
 				<p:commandButton id="btnVoltar" value="Voltar"
 					action="#{tarefaMB.redirecionaParaConsultarTarefa()}"
-					immediate="true" styleClass="float-right"/>
+					immediate="true" styleClass="float-right" />
 			</p:panel>
 		</h:form>
-
 	</ui:define>
+
 </ui:composition>

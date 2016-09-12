@@ -12,6 +12,7 @@ import javax.faces.model.SelectItem;
 import org.jboss.logging.Logger;
 
 import br.com.agenda.entity.Contato;
+import br.com.agenda.enums.PageEnum;
 import br.com.agenda.enums.TipoBuscaContatoEnum;
 import br.com.agenda.exceptions.AgendaException;
 import br.com.agenda.service.ContatoService;
@@ -31,10 +32,6 @@ public class ContatoMB extends GenericMB {
 	private static final long serialVersionUID = -4127295858936642247L;
 
 	private static final Logger LOGGER = Logger.getLogger(ContatoMB.class);
-
-	private static final String PAGE_EDITA_CONTATO = "/pages/contato/editarContato.xhtml";
-	private static final String PAGE_CONSULTA_CONTATO = "/pages/contato/consultaContato.jsf";
-
 	private static final String CONTATO_VISAO = "contatoVisao";
 
 	@EJB
@@ -55,6 +52,9 @@ public class ContatoMB extends GenericMB {
 		}
 		if (ValidacoesContato.nullOrEmpty(this.getContatoVisao().getContato())) {
 			this.getContatoVisao().setContato(new Contato());
+
+			this.getContatoVisao()
+					.setListaResultadoContato(contatoService.buscarTodosContatos(this.getContatoVisao().getContato()));
 		}
 		if (ValidacoesContato.nullOrEmpty(this.getContatoVisao().getTipoBuscaContato())) {
 			this.iniciaTipoBuscaContato();
@@ -64,7 +64,7 @@ public class ContatoMB extends GenericMB {
 	/**
 	 * Persiste dados
 	 */
-	public void incluirContato() {
+	public String incluirContato() {
 		this.getContatoVisao().getContato()
 				.setNoContato(StringUtil.limpaEspacosVazios(this.getContatoVisao().getContato().getNoContato()));
 		this.getContatoVisao().getContato().setDtEntrada(new Date());
@@ -79,7 +79,8 @@ public class ContatoMB extends GenericMB {
 			super.exibirMsgErro(ae.getMessage());
 			LOGGER.info(ae);
 		}
-		this.getContatoVisao().setContato(new Contato());
+		this.limpaFiltroContato();
+		return redirecionaParaConsultarContato();
 	}
 
 	/**
@@ -111,16 +112,21 @@ public class ContatoMB extends GenericMB {
 			super.exibirMsgErro(ae.getMessage());
 			LOGGER.info(ae);
 		}
-		return PAGE_CONSULTA_CONTATO;
+		return this.redirecionaParaConsultarContato();
 	}
 
 	/**
 	 * Exclui contato
 	 */
-	public void excluirContato() {
-		contatoService.remover(this.getContatoVisao().getContato());
+	public void excluirContato(Contato contato) {
+		try {
+			contatoService.remover(contato);
+			init();
+		} catch (Exception e) {
+			super.exibirMsgErro("Ops! Por algum motivo, não conseguimos remover este contato. =(");
+		}
 	}
-
+	
 	private void iniciaTipoBuscaContato() {
 		this.getContatoVisao().setTipoBuscaContato(new ArrayList<SelectItem>());
 		for (TipoBuscaContatoEnum e : TipoBuscaContatoEnum.values()) {
@@ -156,7 +162,25 @@ public class ContatoMB extends GenericMB {
 	public String redirecionaParaEditarContato(Contato contato) {
 		this.getContatoVisao().setContato(contato);
 		super.setFlash(CONTATO_VISAO, this.getContatoVisao());
-		return PAGE_EDITA_CONTATO;
+		return PageEnum.PAGE_EDITA_CONTATO.getValor();
+	}
+
+	/**
+	 * 
+	 * @param contatoVisao
+	 * @return String
+	 */
+	public String redirecionaParaIncluirContato() {
+		return PageEnum.PAGE_INCLUI_CONTATO.getValor();
+	}
+
+	/**
+	 * 
+	 * @param contatoVisao
+	 * @return String
+	 */
+	public String redirecionaParaConsultarContato() {
+		return PageEnum.PAGE_CONSULTA_CONTATO.getValor();
 	}
 
 	/**
@@ -164,7 +188,7 @@ public class ContatoMB extends GenericMB {
 	 * Limpa filtro
 	 * </p>
 	 */
-	public void limpaFiltroConsulta() {
+	public void limpaFiltroContato() {
 		this.getContatoVisao().setContato(new Contato());
 	}
 

@@ -8,48 +8,47 @@
 
 	<ui:define name="breadcrumb">
 		<h:form prependId="false" id="breadCrumbsForm">
-			<p:breadCrumb homeDisplay="false">
+			<p:breadCrumb homeDisplay="false" id="breadCrumb">
 				<p:menuitem value="Início" action="/pages/home/home.xhtml" />
 				<p:menuitem value="Lembrete" />
-				<p:menuitem value="Incluir"
-					action="/pages/lembrete/incluirLembrete.jsf" />
+				<p:menuitem value="Editar"
+					action="/pages/lembrete/editarLembrete.jsf" />
 			</p:breadCrumb>
 		</h:form>
 	</ui:define>
 
 	<ui:define name="content">
-		<h:form prependId="false" id="formIncluirLembrete">
+		<h:form prependId="false" id="formEditarLembrete">
 			<p:messages autoUpdate="true" />
 			<p:panel styleClass="clearfix">
-				<p:panelGrid columns="2" styleClass="tabelaIncluir">
+				<p:panelGrid columns="2" styleClass="tabelaEditar">
 
-					<p:outputLabel value="Titulo da lembrete: " />
+					<p:outputLabel value="Nome: " id="lblEditarLembreteNome" />
 					<p:inputText
 						value="#{lembreteMB.lembreteVisao.lembrete.noLembrete}"
-						required="true"
-						requiredMessage="Insira um titulo para esta lembrete."
-						id="inputIncluirLembreteNome" />
+						required="true" requiredMessage="Insira o nome do lembrete."
+						id="inputEditarLembreteNome" />
 
-					<p:outputLabel value="Descrição da lembrete: " />
+					<p:outputLabel value="Telefone: " id="lblEditarLembreteTelefone" />
 					<p:inputTextarea
 						value="#{lembreteMB.lembreteVisao.lembrete.deLembrete}"
-						required="true" requiredMessage="Insira um corpo a esta lembrete."
-						id="inputIncluirLembreteDesc" />
+						required="true" requiredMessage="Insira um corpo para lembrete."
+						id="inputEditarLembreteDesc" />
 
-					<p:commandButton action="#{lembreteMB.incluirLembrete()}"
-						value="Incluir" ajax="false" />
+					<p:commandButton action="#{lembreteMB.editarLembrete()}"
+						value="Editar" ajax="false" id="btnEditaLembrete" />
 
 					<p:commandButton value="Limpar"
-						update="inputIncluirLembreteNome inputIncluirLembreteDesc"
-						actionListener="#{lembreteMB.limpaFiltroLembrete()}"
-						partialSubmit="true" id="btnReset" styleClass="float-right" />
+						update="inputEditarLembreteDesc inputEditarLembreteNome"
+						action="#{lembreteMB.limpaFiltroLembrete()}" partialSubmit="true"
+						id="btnReset" styleClass="float-right" />
 
 				</p:panelGrid>
 				<p:commandButton id="btnVoltar" value="Voltar"
 					action="#{lembreteMB.redirecionaParaConsultarLembrete()}"
-					immediate="true" styleClass="float-right"/>
+					immediate="true" styleClass="float-right" />
 			</p:panel>
 		</h:form>
-
 	</ui:define>
+
 </ui:composition>

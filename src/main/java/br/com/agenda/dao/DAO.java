@@ -55,10 +55,9 @@ public abstract class DAO<T> {
 	@SuppressWarnings("unchecked")
 	public List<T> buscarTodos(T entidade) {
 		StringBuilder sql = new StringBuilder("");
-		sql.append(" SELECT e FROM :entidade e ");
+		sql.append(" SELECT e FROM " + entidade.getClass().getName() +" e ");
 		try {
 			Query query = em.createQuery(sql.toString());
-			query.setParameter("entidade", entidade);
 			return query.getResultList();
 		} catch (NoResultException e) {
 			LOGGER.info(e);

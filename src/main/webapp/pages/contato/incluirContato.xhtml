@@ -20,12 +20,12 @@
 	<ui:define name="content">
 		<h:form prependId="false" id="formIncluirContato">
 			<p:messages autoUpdate="true" />
-			<p:panel>
-				<p:panelGrid columns="2">
+			<p:panel styleClass="clearfix">
+				<p:panelGrid columns="2" styleClass="tabelaIncluir">
 
 					<p:outputLabel value="Nome: " id="lblIncluirContatoNome" />
-					<p:inputText value="#{contatoMB.contatoVisao.contato.noContato}" required="true"
-						requiredMessage="Insira o nome do contato."
+					<p:inputText value="#{contatoMB.contatoVisao.contato.noContato}"
+						required="true" requiredMessage="Insira o nome do contato."
 						id="inputIncluirContatoNome" />
 
 					<p:outputLabel value="Telefone: " id="lblIncluirContatoTelefone" />
@@ -39,11 +39,13 @@
 
 					<p:commandButton value="Limpar"
 						update="inputIncluirContatoTelefone inputIncluirContatoNome"
-						actionListener="#{contatoMB.limpaFiltroConsulta()}"
-						partialSubmit="true"
-						id="btnReset" />
+						actionListener="#{contatoMB.limpaFiltroContato()}"
+						partialSubmit="true" id="btnReset" styleClass="float-right" />
 
 				</p:panelGrid>
+				<p:commandButton id="btnVoltar" value="Voltar"
+					action="#{contatoMB.redirecionaParaConsultarContato()}"
+					immediate="true" styleClass="float-right"/>
 			</p:panel>
 		</h:form>
 	</ui:define>

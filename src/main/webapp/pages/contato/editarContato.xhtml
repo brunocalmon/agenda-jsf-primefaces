@@ -19,8 +19,8 @@
 	<ui:define name="content">
 		<h:form prependId="false" id="formEditarContato">
 			<p:messages autoUpdate="true" />
-			<p:panel>
-				<p:panelGrid columns="2">
+			<p:panel styleClass="clearfix">
+				<p:panelGrid columns="2" styleClass="tabelaEditar">
 
 					<p:outputLabel value="Nome: " id="lblEditarContatoNome" />
 					<p:inputText value="#{contatoMB.contatoVisao.contato.noContato}"
@@ -33,16 +33,18 @@
 						requiredMessage="Insira o número de telefone."
 						id="inputEditarContatoTelefone" />
 
-					<p:commandButton
-						action="#{contatoMB.editarContato()}"
-						value="Editar" ajax="false" id="btnEditaContato"/>
+					<p:commandButton action="#{contatoMB.editarContato()}"
+						value="Editar" ajax="false" id="btnEditaContato" />
 
 					<p:commandButton value="Limpar"
 						update="inputEditarContatoTelefone inputEditarContatoNome"
-						action="#{contatoMB.limpaFiltroConsulta()}" partialSubmit="true"
-						id="btnReset" />
+						action="#{contatoMB.limpaFiltroContato()}" partialSubmit="true"
+						id="btnReset" styleClass="float-right" />
 
 				</p:panelGrid>
+				<p:commandButton id="btnVoltar" value="Voltar"
+					action="#{contatoMB.redirecionaParaConsultarContato()}"
+					immediate="true" styleClass="float-right" />
 			</p:panel>
 		</h:form>
 	</ui:define>
