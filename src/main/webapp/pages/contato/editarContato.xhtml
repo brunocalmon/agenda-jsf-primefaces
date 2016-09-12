@@ -27,11 +27,11 @@
 						required="true" requiredMessage="Insira o nome do contato."
 						id="inputEditarContatoNome" />
 
-					<p:outputLabel value="Telefone: " id="lblEditarContatoTelefone" />
-					<p:inputMask value="#{contatoMB.contatoVisao.contato.nuTelefone}"
-						mask="(99) 9999-9999" required="true"
-						requiredMessage="Insira o número de telefone."
-						id="inputEditarContatoTelefone" />
+<!-- 					<p:outputLabel value="Telefone: " id="lblEditarContatoTelefone" /> -->
+<!-- 					<p:inputMask value="#{contatoMB.contatoVisao.contato}" -->
+<!-- 						mask="(99) 9999-9999" required="true" -->
+<!-- 						requiredMessage="Insira o número de telefone." -->
+<!-- 						id="inputEditarContatoTelefone" /> -->
 
 					<p:commandButton action="#{contatoMB.editarContato()}"
 						value="Editar" ajax="false" id="btnEditaContato" />

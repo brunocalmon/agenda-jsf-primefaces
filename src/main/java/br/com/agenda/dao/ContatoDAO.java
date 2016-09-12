@@ -11,6 +11,8 @@ import javax.persistence.Query;
 import org.jboss.logging.Logger;
 
 import br.com.agenda.entity.Contato;
+import br.com.agenda.entity.ContatoTelefone;
+import br.com.agenda.entity.Telefone;
 
 /**
  * 
@@ -25,17 +27,17 @@ public class ContatoDAO extends DAO<Contato> {
 
 	/**
 	 * 
-	 * @param contato
+	 * @param nome
 	 * @return List<Contato>
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Contato> buscarContatoPorNome(Contato contato) {
+	public List<Contato> buscarContatoPorNome(String nome) {
 		StringBuilder sql = new StringBuilder("");
 		sql.append(" SELECT c FROM Contato c ");
 		sql.append(" WHERE LOWER(c.noContato) LIKE LOWER(CONCAT('%', :nome, '%')))");
 		try {
 			Query query = em.createQuery(sql.toString());
-			query.setParameter("nome", contato.getNoContato());
+			query.setParameter("nome", nome);
 			return (List<Contato>) query.getResultList();
 		} catch (NoResultException e) {
 			LOGGER.info(e);
@@ -44,22 +46,21 @@ public class ContatoDAO extends DAO<Contato> {
 	}
 
 	/**
-	 * 
-	 * @param contato
-	 * @return List<Contato>
+	 * Faz busca por telefone
+	 * @param nuTelefone
+	 * @return String
 	 */
-	@SuppressWarnings("unchecked")
-	public List<Contato> buscarContatoPorTelefone(Contato contato) {
+	public Contato buscarContatoPorTelefone(String nuTelefone) {
 		StringBuilder sql = new StringBuilder("");
-		sql.append(" SELECT c FROM Contato c ");
-		sql.append(" WHERE c.nuTelefone = :telefone ");
+		sql.append(" SELECT ct.pk.contato FROM ContatoTelefone ct ");
+		sql.append(" WHERE ct.pk.telefone.nuTelefone =:nuTelefone ");
 		try {
 			Query query = em.createQuery(sql.toString());
-			query.setParameter("telefone", contato.getNuTelefone());
-			return query.getResultList();
+			query.setParameter("nuTelefone", nuTelefone);
+			return (Contato) query.getSingleResult();
 		} catch (NoResultException e) {
 			LOGGER.info(e);
-			return Collections.emptyList();
+			return null;
 		}
 	}
 
@@ -81,6 +82,17 @@ public class ContatoDAO extends DAO<Contato> {
 		} catch (NoResultException e) {
 			LOGGER.info(e);
 		}
+	}
 
+	/**
+	 * 
+	 * @param lista
+	 */
+	public void inserirTelefones(List<ContatoTelefone> lista) {
+		for (ContatoTelefone ct : lista) {
+			ct.getPk().setContato(em.find(Contato.class, ct.getPk().getContato().getNuContato()));
+			ct.getPk().setTelefone(em.find(Telefone.class, ct.getPk().getTelefone().getIdTelefone()));
+			em.persist(ct);
+		}
 	}
 }

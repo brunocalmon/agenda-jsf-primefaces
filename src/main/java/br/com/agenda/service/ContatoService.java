@@ -8,8 +8,9 @@ import javax.ejb.Stateless;
 import javax.inject.Named;
 
 import br.com.agenda.dao.ContatoDAO;
+import br.com.agenda.dao.TelefoneDAO;
 import br.com.agenda.entity.Contato;
-import br.com.agenda.util.StringUtil;
+import br.com.agenda.entity.ContatoTelefone;
 
 /**
  * 
@@ -24,14 +25,20 @@ public class ContatoService implements Serializable {
 
 	@EJB
 	private ContatoDAO contatoDAO;
+	@EJB
+	private TelefoneDAO telefoneDAO;
 
 	/**
 	 * 
 	 * @param contato
 	 */
 	public void inserir(Contato contato) {
-		contato.setNuTelefone(StringUtil.desformatString("(##) ####-####", contato.getNuTelefone()));
 		contatoDAO.inserir(contato);
+		for (ContatoTelefone ct : contato.getListaTelefone()) {
+			telefoneDAO.inserir(ct.getPk().getTelefone());
+			ct.getPk().setContato(contato);
+		}
+		contatoDAO.inserirTelefones(contato.getListaTelefone());
 	}
 
 	/**
@@ -39,10 +46,11 @@ public class ContatoService implements Serializable {
 	 * @param contato
 	 */
 	public void atualizar(Contato contato) {
-		contato.setNuTelefone(StringUtil.desformatString("(##) ####-####", contato.getNuTelefone()));
+		// contato.setNuTelefone(StringUtil.desformatString("(##) ####-####",
+		// contato.getNuTelefone()));
 		contatoDAO.atualizar(contato);
 	}
-	
+
 	/**
 	 * 
 	 * @param contato
@@ -53,26 +61,33 @@ public class ContatoService implements Serializable {
 
 	/**
 	 * 
-	 * @param contato
+	 * @param nome
 	 * @return List<Contato>
 	 */
-	public List<Contato> buscarContatoPorNome(Contato contato) {
-		return contatoDAO.buscarContatoPorNome(contato);
+	public List<Contato> buscarContatoPorNome(String nome) {
+		return contatoDAO.buscarContatoPorNome(nome);
+	}
+
+	/**
+	 * 
+	 * @param nuTelefone
+	 * @return List<Contato>
+	 */
+	public Contato buscarContatoPorTelefone(String nuTelefone) {
+		// contato.setNuTelefone(
+		// contato.getNuTelefone().replace("(", "").replace(")",
+		// "").replace("-", "").replace(" ", ""));
+		return contatoDAO.buscarContatoPorTelefone(nuTelefone);
+		// return null;
 	}
 
 	/**
 	 * 
 	 * @param contato
-	 * @return List<Contato>
+	 * @return List<Contato> 
 	 */
-	public List<Contato> buscarContatoPorTelefone(Contato contato) {
-		contato.setNuTelefone(
-				contato.getNuTelefone().replace("(", "").replace(")", "").replace("-", "").replace(" ", ""));
-		return contatoDAO.buscarContatoPorTelefone(contato);
-	}
-	
 	public List<Contato> buscarTodosContatos(Contato contato) {
 		return contatoDAO.buscarTodos(contato);
 	}
-	
+
 }

@@ -2,11 +2,15 @@ package br.com.agenda.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -15,7 +19,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "contato", schema = "public")
+@Table(name = "contato", schema = "agd")
 public class Contato implements Serializable {
 
 	private static final long serialVersionUID = 3269376878922748348L;
@@ -28,11 +32,11 @@ public class Contato implements Serializable {
 	@Column(name = "no_contato")
 	private String noContato;
 
-	@Column(name = "nu_telefone")
-	private String nuTelefone;
-
 	@Column(name = "dt_entrada")
 	private Date dtEntrada;
+
+	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "pk.telefone", targetEntity = ContatoTelefone.class)
+	private List<ContatoTelefone> listaTelefone;
 
 	public Long getNuContato() {
 		return nuContato;
@@ -50,14 +54,6 @@ public class Contato implements Serializable {
 		this.noContato = noContato;
 	}
 
-	public String getNuTelefone() {
-		return nuTelefone;
-	}
-
-	public void setNuTelefone(String nuTelefone) {
-		this.nuTelefone = nuTelefone;
-	}
-
 	public Date getDtEntrada() {
 		return dtEntrada;
 	}
@@ -70,40 +66,33 @@ public class Contato implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((dtEntrada == null) ? 0 : dtEntrada.hashCode());
-		result = prime * result + ((noContato == null) ? 0 : noContato.hashCode());
 		result = prime * result + ((nuContato == null) ? 0 : nuContato.hashCode());
-		result = prime * result + ((nuTelefone == null) ? 0 : nuTelefone.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof Contato))
+		if (getClass() != obj.getClass())
 			return false;
 		Contato other = (Contato) obj;
-		if (dtEntrada == null) {
-			if (other.dtEntrada != null)
-				return false;
-		} else if (!dtEntrada.equals(other.dtEntrada))
-			return false;
-		if (noContato == null) {
-			if (other.noContato != null)
-				return false;
-		} else if (!noContato.equals(other.noContato))
-			return false;
 		if (nuContato == null) {
 			if (other.nuContato != null)
 				return false;
 		} else if (!nuContato.equals(other.nuContato))
 			return false;
-		if (nuTelefone == null) {
-			if (other.nuTelefone != null)
-				return false;
-		} else if (!nuTelefone.equals(other.nuTelefone))
-			return false;
 		return true;
 	}
+
+	public List<ContatoTelefone> getListaTelefone() {
+		return listaTelefone;
+	}
+
+	public void setListaTelefone(List<ContatoTelefone> listaTelefone) {
+		this.listaTelefone = listaTelefone;
+	}
+
 }

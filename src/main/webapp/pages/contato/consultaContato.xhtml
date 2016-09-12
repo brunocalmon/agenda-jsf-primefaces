@@ -37,7 +37,7 @@
 					<p:outputLabel value="Consultar Contato: "
 						rendered="#{contatoMB.verificaTipoDeBusca() eq 1}"
 						id="lblConsultaContatoNome" />
-					<p:inputText value="#{contatoMB.contatoVisao.contato.noContato}"
+					<p:inputText value="#{contatoMB.contatoVisao.nome}"
 						rendered="#{contatoMB.verificaTipoDeBusca() eq 1}" required="true"
 						requiredMessage="Campo nome está vazio."
 						id="inputConsultaContatoNome" />
@@ -45,7 +45,7 @@
 					<p:outputLabel value="Consultar Telefone: "
 						rendered="#{contatoMB.verificaTipoDeBusca() eq 2}"
 						id="lblConsultaContatoTelefone" />
-					<p:inputMask value="#{contatoMB.contatoVisao.contato.nuTelefone}"
+					<p:inputMask value="#{contatoMB.contatoVisao.telefone}"
 						mask="(99) 9999-9999"
 						rendered="#{contatoMB.verificaTipoDeBusca() eq 2}" required="true"
 						requiredMessage="Campo telefone está vazio."
@@ -96,30 +96,36 @@
 						<h:outputText value="#{contato.noContato}" />
 					</p:column>
 
-					<p:column headerText="Telefone" sortBy="#{contato.nuTelefone}">
-						<h:outputText value="#{contato.nuTelefone}"
-							converter="telefoneConverter" />
+					<p:column headerText="Telefone">
+						<h:selectManyListbox
+							value="#{contatoMB.contatoVisao.telefoneSelecionado}">
+							<f:selectItems value="#{contatoMB.retornaListaTelefone}"
+								var="tipo" itemValue="#{tipo.value}"
+								itemLabel="#{tipo.label}"/>
+						</h:selectManyListbox>
 					</p:column>
 
-					<p:column headerText="Ações" style="width:40px">
-						<p:commandLink id="btnEditarContato"
-							action="#{contatoMB.redirecionaParaEditarContato(contato)}"
-							immediate="true">
-							<p:graphicImage id="imageEditarContato"
-								value="/resources/img/icon/editar-icon.png" width="20"
-								height="20" />
-							<p:tooltip id="toolEditar" for="btnEditarContato" value="Editar" />
-						</p:commandLink>
+					<p:column headerText="
+								Ações" style="width:40px">
+								<p:commandLink id="btnEditarContato"
+									action="#{contatoMB.redirecionaParaEditarContato(contato)}"
+									immediate="true">
+									<p:graphicImage id="imageEditarContato"
+										value="/resources/img/icon/editar-icon.png" width="20"
+										height="20" />
+									<p:tooltip id="toolEditar" for="btnEditarContato"
+										value="Editar" />
+								</p:commandLink>
 
-						<p:commandLink id="btnExcluirContato"
-							action="#{contatoMB.excluirContato(contato)}" update="dataTable"
-							immediate="true">
-							<p:graphicImage id="imageExcluirContato"
-								value="/resources/img/icon/remove-icon.png" width="20"
-								height="20" />
-							<p:tooltip id="toolExcluir" for="btnExcluirContato"
-								value="Excluir" />
-						</p:commandLink>
+								<p:commandLink id="btnExcluirContato"
+									action="#{contatoMB.excluirContato(contato)}"
+									update="dataTable" immediate="true">
+									<p:graphicImage id="imageExcluirContato"
+										value="/resources/img/icon/remove-icon.png" width="20"
+										height="20" />
+									<p:tooltip id="toolExcluir" for="btnExcluirContato"
+										value="Excluir" />
+								</p:commandLink>
 					</p:column>
 
 				</p:dataTable>
