@@ -10,7 +10,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -20,14 +23,15 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "contato", schema = "agd")
+@SequenceGenerator(name = "contato_sequence", sequenceName = "contato_sequence", allocationSize = 1, initialValue = 0)
 public class Contato implements Serializable {
 
 	private static final long serialVersionUID = 3269376878922748348L;
 
 	@Id
 	@GeneratedValue
-	@Column(name = "nu_contato")
-	private Long nuContato;
+	@Column(name = "id_contato")
+	private Long idContato;
 
 	@Column(name = "no_contato")
 	private String noContato;
@@ -35,15 +39,19 @@ public class Contato implements Serializable {
 	@Column(name = "dt_entrada")
 	private Date dtEntrada;
 
-	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "pk.telefone", targetEntity = ContatoTelefone.class)
-	private List<ContatoTelefone> listaTelefone;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "contato")
+	private List<Telefone> listaTelefone;
 
-	public Long getNuContato() {
-		return nuContato;
+	// @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy
+	// = "pk.telefone", targetEntity = ContatoTelefone.class)
+	// private List<ContatoTelefone> listaTelefone;
+
+	public Long getIdContato() {
+		return idContato;
 	}
 
-	public void setNuContato(Long nuContato) {
-		this.nuContato = nuContato;
+	public void setIdContato(Long idContato) {
+		this.idContato = idContato;
 	}
 
 	public String getNoContato() {
@@ -66,7 +74,7 @@ public class Contato implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((nuContato == null) ? 0 : nuContato.hashCode());
+		result = prime * result + ((idContato == null) ? 0 : idContato.hashCode());
 		return result;
 	}
 
@@ -79,19 +87,19 @@ public class Contato implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Contato other = (Contato) obj;
-		if (nuContato == null) {
-			if (other.nuContato != null)
+		if (idContato == null) {
+			if (other.idContato != null)
 				return false;
-		} else if (!nuContato.equals(other.nuContato))
+		} else if (!idContato.equals(other.idContato))
 			return false;
 		return true;
 	}
 
-	public List<ContatoTelefone> getListaTelefone() {
+	public List<Telefone> getListaTelefone() {
 		return listaTelefone;
 	}
 
-	public void setListaTelefone(List<ContatoTelefone> listaTelefone) {
+	public void setListaTelefone(List<Telefone> listaTelefone) {
 		this.listaTelefone = listaTelefone;
 	}
 

@@ -99,9 +99,8 @@
 					<p:column headerText="Telefone">
 						<h:selectManyListbox
 							value="#{contatoMB.contatoVisao.telefoneSelecionado}">
-							<f:selectItems value="#{contatoMB.retornaListaTelefone}"
-								var="tipo" itemValue="#{tipo.value}"
-								itemLabel="#{tipo.label}"/>
+							<f:selectItems value="#{contatoMB.retornaListaTelefone()}"
+								var="tipo" itemValue="#{tipo.value}" itemLabel="#{tipo.label}" />
 						</h:selectManyListbox>
 					</p:column>
 

@@ -32,7 +32,7 @@
 					</h:panelGrid>
 					<div />
 					<ui:repeat var="telefone"
-						value="#{contatoMB.contatoVisao.listaTelefones}">
+						value="#{contatoMB.contatoVisao.contato.listaTelefone}">
 						<h:panelGrid columns="3" id="repeatTelefone">
 							<p:outputLabel value="Telefone: " id="lblIncluirContatoTelefone"
 								styleClass="lbl-incluir-telefone" />
@@ -40,7 +40,7 @@
 								required="true" requiredMessage="Insira o número de telefone."
 								styleClass="input-incluir-telefone">
 								<p:ajax event="blur" partialSubmit="true"
-									listener="#{contatoMB.verificaTelefoneDuplicadosEmTela(contatoMB.contatoVisao.listaTelefones)}"></p:ajax>
+									listener="#{contatoMB.verificaTelefoneDuplicadosEmTela(contatoMB.contatoVisao.contato.listaTelefone)}"></p:ajax>
 							</p:inputMask>
 
 							<p:commandLink id="btnExcluirContato"

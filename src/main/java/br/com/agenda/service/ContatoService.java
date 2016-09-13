@@ -10,7 +10,6 @@ import javax.inject.Named;
 import br.com.agenda.dao.ContatoDAO;
 import br.com.agenda.dao.TelefoneDAO;
 import br.com.agenda.entity.Contato;
-import br.com.agenda.entity.ContatoTelefone;
 
 /**
  * 
@@ -34,11 +33,11 @@ public class ContatoService implements Serializable {
 	 */
 	public void inserir(Contato contato) {
 		contatoDAO.inserir(contato);
-		for (ContatoTelefone ct : contato.getListaTelefone()) {
-			telefoneDAO.inserir(ct.getPk().getTelefone());
-			ct.getPk().setContato(contato);
-		}
-		contatoDAO.inserirTelefones(contato.getListaTelefone());
+//		for (ContatoTelefone ct : contato.getListaTelefone()) {
+//			telefoneDAO.inserir(ct.getPk().getTelefone());
+//			ct.getPk().setContato(contato);
+//		}
+//		contatoDAO.inserirTelefones(contato.getListaTelefone());
 	}
 
 	/**

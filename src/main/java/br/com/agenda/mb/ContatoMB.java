@@ -14,8 +14,6 @@ import javax.faces.model.SelectItem;
 import org.jboss.logging.Logger;
 
 import br.com.agenda.entity.Contato;
-import br.com.agenda.entity.ContatoTelefone;
-import br.com.agenda.entity.ContatoTelefonePk;
 import br.com.agenda.entity.Telefone;
 import br.com.agenda.enums.PageEnum;
 import br.com.agenda.enums.TipoBuscaContatoEnum;
@@ -71,8 +69,8 @@ public class ContatoMB extends GenericMB {
 			this.iniciaTipoBuscaContato();
 		}
 
-		if (ValidacoesContato.nullOrEmpty(this.getContatoVisao().getListaTelefones())) {
-			this.getContatoVisao().setListaTelefones(new ArrayList<Telefone>());
+		if (ValidacoesContato.nullOrEmpty(this.getContatoVisao().getContato().getListaTelefone())) {
+			this.getContatoVisao().getContato().setListaTelefone(new ArrayList<Telefone>());
 			adicionaNovoTelefoneLista();
 		}
 	}
@@ -83,7 +81,7 @@ public class ContatoMB extends GenericMB {
 	public void adicionaNovoTelefoneLista() {
 		Telefone telefone = new Telefone();
 		telefone.setDtTelefone(new Date());
-		getContatoVisao().getListaTelefones().add(telefone);
+		getContatoVisao().getContato().getListaTelefone().add(telefone);
 		contador++;
 	}
 
@@ -118,9 +116,10 @@ public class ContatoMB extends GenericMB {
 		Boolean isRepetidoBanco;
 		Boolean isRepetidoTela;
 
-		isRepetidoTela = ValidacoesContato.verificaTelefonesDuplicadosEmTela(getContatoVisao().getListaTelefones());
-		isRepetidoBanco = ValidacoesContato.verificaTelefoneDuplicadoNaBase(getContatoVisao().getListaTelefones(),
-				telefoneService);
+		isRepetidoTela = ValidacoesContato
+				.verificaTelefonesDuplicadosEmTela(getContatoVisao().getContato().getListaTelefone());
+		isRepetidoBanco = ValidacoesContato
+				.verificaTelefoneDuplicadoNaBase(getContatoVisao().getContato().getListaTelefone(), telefoneService);
 
 		if (isRepetidoTela || isRepetidoBanco) {
 			duplicado = true;
@@ -129,17 +128,23 @@ public class ContatoMB extends GenericMB {
 		if (duplicado) {
 			super.exibirMsgErro("Telefone já cadastrado.");
 		} else {
-			getContatoVisao().getContato().setListaTelefone(new ArrayList<ContatoTelefone>());
-			for (Telefone t : getContatoVisao().getListaTelefones()) {
-				ContatoTelefone ct = new ContatoTelefone();
-				ContatoTelefonePk ctPk = new ContatoTelefonePk();
-				ct.setPk(ctPk);
+			for (Telefone t : getContatoVisao().getContato().getListaTelefone()) {
 				t.setNuTelefone(StringUtil.desformatString("(##) ####-####", t.getNuTelefone()));
-				ct.getPk().setContato(getContatoVisao().getContato());
-				ct.getPk().setTelefone(t);
-
-				getContatoVisao().getContato().getListaTelefone().add(ct);
 			}
+
+			// getContatoVisao().getContato().setListaTelefone(new
+			// ArrayList<ContatoTelefone>());
+			// for (Telefone t : getContatoVisao().getListaTelefones()) {
+			// ContatoTelefone ct = new ContatoTelefone();
+			// ContatoTelefonePk ctPk = new ContatoTelefonePk();
+			// ct.setPk(ctPk);
+			// t.setNuTelefone(StringUtil.desformatString("(##) ####-####",
+			// t.getNuTelefone()));
+			// ct.getPk().setContato(getContatoVisao().getContato());
+			// ct.getPk().setTelefone(t);
+			//
+			// getContatoVisao().getContato().getListaTelefone().add(ct);
+			// }
 		}
 	}
 
@@ -237,9 +242,16 @@ public class ContatoMB extends GenericMB {
 	 * @return List<String>
 	 */
 	public List<SelectItem> retornaListaTelefone() {
-		for (ContatoTelefone ct : getContatoVisao().getContato().getListaTelefone()) {
-			Telefone telefone = ct.getPk().getTelefone();
-			getContatoVisao().getSelectItemTelefones().add(new SelectItem(telefone, telefone.getNuTelefone()));
+		if (ValidacoesContato.nullOrEmpty(getContatoVisao().getSelectItemTelefones())) {
+			getContatoVisao().setSelectItemTelefones(new ArrayList<SelectItem>());
+		}
+
+		if (ValidacoesContato.nullOrEmpty(getContatoVisao().getContato().getListaTelefone())) {
+			for (Telefone telefone : getContatoVisao().getContato().getListaTelefone()) {
+				getContatoVisao().getSelectItemTelefones().add(new SelectItem(telefone, telefone.getNuTelefone()));
+			}
+		} else {
+			getContatoVisao().getSelectItemTelefones().add(new SelectItem("", ""));
 		}
 		return getContatoVisao().getSelectItemTelefones();
 	}
@@ -249,8 +261,8 @@ public class ContatoMB extends GenericMB {
 	 * @param telefone
 	 */
 	public void removeTelefoneParaIncluir(Telefone telefone) {
-		if (getContatoVisao().getListaTelefones().size() > 1) {
-			getContatoVisao().getListaTelefones().remove(telefone);
+		if (getContatoVisao().getContato().getListaTelefone().size() > 1) {
+			getContatoVisao().getContato().getListaTelefone().remove(telefone);
 		} else {
 			super.exibirMsgErro("Precisa adicionar pelo menos um telefone");
 		}

@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -15,6 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "lembrete", schema = "agd")
+@SequenceGenerator(name="lembrete_sequence", sequenceName="lembrete_sequence", allocationSize=1, initialValue=0)
 public class Lembrete {
 
 	@Id

@@ -3,10 +3,15 @@ package br.com.agenda.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -16,6 +21,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "telefone", schema = "agd")
+@SequenceGenerator(name = "telefone_sequence", sequenceName = "telefone_sequence", allocationSize = 1, initialValue = 0)
 public class Telefone implements Serializable {
 
 	private static final long serialVersionUID = 3269376878922748348L;
@@ -30,6 +36,10 @@ public class Telefone implements Serializable {
 
 	@Column(name = "dt_telefone")
 	private Date dtTelefone;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_contato")
+	private Contato contato;
 
 	public Long getIdTelefone() {
 		return idTelefone;
@@ -53,6 +63,14 @@ public class Telefone implements Serializable {
 
 	public void setDtTelefone(Date dtTelefone) {
 		this.dtTelefone = dtTelefone;
+	}
+
+	public Contato getContato() {
+		return contato;
+	}
+
+	public void setContato(Contato contato) {
+		this.contato = contato;
 	}
 
 	@Override

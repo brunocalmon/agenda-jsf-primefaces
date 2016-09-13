@@ -35,10 +35,10 @@ public abstract class ValidacoesContato extends Validacoes {
 		if (nullOrEmpty(contato.getListaTelefone())) {
 			throw new AgendaException("Insira pelo menos um telefone");
 		}
-		for (ContatoTelefone ct : contato.getListaTelefone()) {
-			if (nullOrEmpty(ct.getPk().getTelefone().getNuTelefone()))
-				throw new AgendaException("Preencha todos os campos de telefone ou delete o campo.");
-		}
+//		for (ContatoTelefone ct : contato.getListaTelefone()) {
+//			if (nullOrEmpty(ct.getPk().getTelefone().getNuTelefone()))
+//				throw new AgendaException("Preencha todos os campos de telefone ou delete o campo.");
+//		}
 		/*
 		 * if (nullOrEmpty(contato.getNuTelefone())) { throw new
 		 * AgendaException("Campo telefone não pode estar vazio"); }
@@ -53,7 +53,7 @@ public abstract class ValidacoesContato extends Validacoes {
 	public static void validaEdicaoContato(Contato contato) throws AgendaException {
 		validaInclusaoContato(contato);
 
-		if (nullOrEmpty(contato.getNuContato())) {
+		if (nullOrEmpty(contato.getIdContato())) {
 			throw new AgendaException("Houve uma falha ao tentar atualizar o contato " + contato.getNoContato()
 					+ ". Contate o suporte ou tente novamente mais tarde.");
 		}
