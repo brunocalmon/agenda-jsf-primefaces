@@ -131,20 +131,6 @@ public class ContatoMB extends GenericMB {
 			for (Telefone t : getContatoVisao().getContato().getListaTelefone()) {
 				t.setNuTelefone(StringUtil.desformatString("(##) ####-####", t.getNuTelefone()));
 			}
-
-			// getContatoVisao().getContato().setListaTelefone(new
-			// ArrayList<ContatoTelefone>());
-			// for (Telefone t : getContatoVisao().getListaTelefones()) {
-			// ContatoTelefone ct = new ContatoTelefone();
-			// ContatoTelefonePk ctPk = new ContatoTelefonePk();
-			// ct.setPk(ctPk);
-			// t.setNuTelefone(StringUtil.desformatString("(##) ####-####",
-			// t.getNuTelefone()));
-			// ct.getPk().setContato(getContatoVisao().getContato());
-			// ct.getPk().setTelefone(t);
-			//
-			// getContatoVisao().getContato().getListaTelefone().add(ct);
-			// }
 		}
 	}
 

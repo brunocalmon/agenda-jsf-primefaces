@@ -10,8 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -41,10 +39,6 @@ public class Contato implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "contato")
 	private List<Telefone> listaTelefone;
-
-	// @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy
-	// = "pk.telefone", targetEntity = ContatoTelefone.class)
-	// private List<ContatoTelefone> listaTelefone;
 
 	public Long getIdContato() {
 		return idContato;

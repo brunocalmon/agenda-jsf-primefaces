@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.agenda.entity.Contato;
-import br.com.agenda.entity.ContatoTelefone;
 import br.com.agenda.entity.Telefone;
 import br.com.agenda.exceptions.AgendaException;
 import br.com.agenda.service.TelefoneService;

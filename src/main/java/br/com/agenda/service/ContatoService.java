@@ -33,11 +33,6 @@ public class ContatoService implements Serializable {
 	 */
 	public void inserir(Contato contato) {
 		contatoDAO.inserir(contato);
-//		for (ContatoTelefone ct : contato.getListaTelefone()) {
-//			telefoneDAO.inserir(ct.getPk().getTelefone());
-//			ct.getPk().setContato(contato);
-//		}
-//		contatoDAO.inserirTelefones(contato.getListaTelefone());
 	}
 
 	/**
@@ -45,8 +40,6 @@ public class ContatoService implements Serializable {
 	 * @param contato
 	 */
 	public void atualizar(Contato contato) {
-		// contato.setNuTelefone(StringUtil.desformatString("(##) ####-####",
-		// contato.getNuTelefone()));
 		contatoDAO.atualizar(contato);
 	}
 
@@ -73,11 +66,7 @@ public class ContatoService implements Serializable {
 	 * @return List<Contato>
 	 */
 	public Contato buscarContatoPorTelefone(String nuTelefone) {
-		// contato.setNuTelefone(
-		// contato.getNuTelefone().replace("(", "").replace(")",
-		// "").replace("-", "").replace(" ", ""));
 		return contatoDAO.buscarContatoPorTelefone(nuTelefone);
-		// return null;
 	}
 
 	/**
