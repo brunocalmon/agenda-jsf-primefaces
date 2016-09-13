@@ -6,7 +6,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui" template="/templates/main.xhtml">
 
-	<ui:define name="breadcrumb">
+	<ui:define name="content">
 		<h:form prependId="false" id="breadCrumbsForm">
 			<p:breadCrumb homeDisplay="false" id="breadCrumb">
 				<p:menuitem value="Início" action="/pages/home/home.xhtml" />
@@ -15,96 +15,97 @@
 					action="/pages/contato/consultaContato.jsf" />
 			</p:breadCrumb>
 		</h:form>
-	</ui:define>
 
-	<ui:define name="content">
-		<h:form prependId="false" id="buscaContatoForm">
-			<p:messages autoUpdate="true" id="messages" />
-			<p:panel id="buscaContatoPanel" styleClass="clearfix">
-				<p:panelGrid id="tabelaContatos" columns="2"
-					styleClass="border-none">
+		<div align="center">
+			<div id="div-content-middle" align="justify">
+				<h:form prependId="false" id="buscaContatoForm">
+					<p:messages autoUpdate="true" id="messages" />
+					<p:panel id="buscaContatoPanel" styleClass="clearfix">
+						<p:panelGrid id="tabelaContatos" columns="2"
+							styleClass="border-none">
 
-					<p:outputLabel value="Buscar Por: " id="lblTipoBuscaContato" />
-					<p:selectOneMenu id="tipoBuscaContato"
-						value="#{contatoMB.contatoVisao.tipoBuscaContatoSelecionado}">
-						<f:selectItem itemLabel="Selecione" />
-						<f:selectItems value="#{contatoMB.contatoVisao.tipoBuscaContato}"
-							var="tipo" itemValue="#{tipo.value}" itemLabel="#{tipo.label}" />
-						<p:ajax event="change" partialSubmit="true"
-							update="buscaContatoPanel" />
-					</p:selectOneMenu>
+							<p:outputLabel value="Buscar Por: " id="lblTipoBuscaContato"
+								styleClass="lbl-espacamento" />
+							<p:selectOneMenu id="tipoBuscaContato"
+								value="#{contatoMB.contatoVisao.tipoBuscaContatoSelecionado}">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItems
+									value="#{contatoMB.contatoVisao.tipoBuscaContato}" var="tipo"
+									itemValue="#{tipo.value}" itemLabel="#{tipo.label}" />
+								<p:ajax event="change" partialSubmit="true"
+									update="buscaContatoPanel" />
+							</p:selectOneMenu>
 
-					<p:outputLabel value="Consultar Contato: "
-						rendered="#{contatoMB.verificaTipoDeBusca() eq 1}"
-						id="lblConsultaContatoNome" />
-					<p:inputText value="#{contatoMB.contatoVisao.nome}"
-						rendered="#{contatoMB.verificaTipoDeBusca() eq 1}" required="true"
-						requiredMessage="Campo nome está vazio."
-						id="inputConsultaContatoNome" />
+							<p:outputLabel value="Consultar Contato: "
+								rendered="#{contatoMB.verificaTipoDeBusca() eq 1}"
+								id="lblConsultaContatoNome" styleClass="lbl-espacamento" />
+							<p:inputText value="#{contatoMB.contatoVisao.nome}"
+								rendered="#{contatoMB.verificaTipoDeBusca() eq 1}"
+								required="true" requiredMessage="Campo nome está vazio."
+								id="inputConsultaContatoNome" />
 
-					<p:outputLabel value="Consultar Telefone: "
-						rendered="#{contatoMB.verificaTipoDeBusca() eq 2}"
-						id="lblConsultaContatoTelefone" />
-					<p:inputMask value="#{contatoMB.contatoVisao.telefone}"
-						mask="(99) 9999-9999"
-						rendered="#{contatoMB.verificaTipoDeBusca() eq 2}" required="true"
-						requiredMessage="Campo telefone está vazio."
-						id="inputConsultaContatoTelefone" />
+							<p:outputLabel value="Consultar Telefone: "
+								rendered="#{contatoMB.verificaTipoDeBusca() eq 2}"
+								id="lblConsultaContatoTelefone" styleClass="lbl-espacamento" />
+							<p:inputMask value="#{contatoMB.contatoVisao.telefone}"
+								mask="(99) 9999-9999"
+								rendered="#{contatoMB.verificaTipoDeBusca() eq 2}"
+								required="true" requiredMessage="Campo telefone está vazio."
+								id="inputConsultaContatoTelefone" />
 
-					<p:commandButton action="#{contatoMB.consultaContato()}"
-						value="Buscar" ajax="false"
-						disabled="#{contatoMB.verificaTipoDeBusca() eq 0}"
-						id="btnConsultaContato" />
+							<p:commandButton action="#{contatoMB.consultaContato()}"
+								value="Buscar" ajax="false"
+								disabled="#{contatoMB.verificaTipoDeBusca() eq 0}"
+								id="btnConsultaContato" />
 
-					<p:commandButton value="Limpar"
-						update="inputConsultaContatoTelefone inputConsultaContatoNome"
-						action="#{contatoMB.limpaFiltroContato()}" partialSubmit="true"
-						immediate="true" process="@this"
-						disabled="#{contatoMB.verificaTipoDeBusca() eq 0}" id="btnReset"
-						styleClass="float-right" />
+							<p:commandButton value="Limpar"
+								update="inputConsultaContatoTelefone inputConsultaContatoNome"
+								action="#{contatoMB.limpaFiltroContato()}" partialSubmit="true"
+								immediate="true" process="@this"
+								disabled="#{contatoMB.verificaTipoDeBusca() eq 0}" id="btnReset"
+								styleClass="float-right" />
 
-				</p:panelGrid>
+						</p:panelGrid>
 
-				<p:commandLink id="btnNovoContato"
-					action="/pages/contato/incluirContato.jsf" immediate="true">
-					<p:graphicImage id="imageNovoContato"
-						value="/resources/img/icon/add-icon.png" />
-					<p:tooltip id="toolNovo" for="btnNovoContato" value="Novo" />
-				</p:commandLink>
+						<p:commandLink id="btnNovoContato"
+							action="/pages/contato/incluirContato.jsf" immediate="true">
+							<p:graphicImage id="imageNovoContato"
+								value="/resources/img/icon/add-icon.png" />
+							<p:tooltip id="toolNovo" for="btnNovoContato" value="Novo" />
+						</p:commandLink>
 
-			</p:panel>
+					</p:panel>
 
-			<p:panel id="relatorioContatoPanel" styleClass="border-none">
-				<p:dataTable var="contato"
-					value="#{contatoMB.contatoVisao.listaResultadoContato}"
-					emptyMessage="Nenhum Resultado Encontrado" paginator="true"
-					paginatorPosition="bottom" rows="10" id="dataTable"
-					sortBy="#{contato.dtEntrada}">
+					<p:panel id="relatorioContatoPanel" styleClass="border-none">
+						<p:dataTable styleClass="relatorio-panel" var="contato"
+							value="#{contatoMB.contatoVisao.listaResultadoContato}"
+							emptyMessage="Nenhum Resultado Encontrado" paginator="true"
+							paginatorPosition="bottom" rows="10" id="dataTable"
+							sortBy="#{contato.dtEntrada}">
 
-					<!-- 					<p:column headerText="Id" sortBy="#{contato.nuContato}"> -->
-					<!-- 						<h:outputText value="#{contato.nuContato}" /> -->
-					<!-- 					</p:column> -->
+							<!-- 					<p:column headerText="Id" sortBy="#{contato.nuContato}"> -->
+							<!-- 						<h:outputText value="#{contato.nuContato}" /> -->
+							<!-- 					</p:column> -->
 
-					<p:column headerText="Entrada" sortBy="#{contato.dtEntrada}">
-						<h:outputText value="#{contato.dtEntrada}">
-							<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
-								timeZone="America/Sao_Paulo" />
-						</h:outputText>
-					</p:column>
+							<p:column headerText="Entrada" sortBy="#{contato.dtEntrada}">
+								<h:outputText value="#{contato.dtEntrada}">
+									<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+										timeZone="America/Sao_Paulo" />
+								</h:outputText>
+							</p:column>
 
-					<p:column headerText="Nome" sortBy="#{contato.noContato}">
-						<h:outputText value="#{contato.noContato}" />
-					</p:column>
+							<p:column headerText="Nome" sortBy="#{contato.noContato}">
+								<h:outputText value="#{contato.noContato}" />
+							</p:column>
 
-					<p:column headerText="Telefone">
-						<h:selectManyListbox
-							value="#{contatoMB.contatoVisao.telefoneSelecionado}">
-							<f:selectItems value="#{contatoMB.retornaListaTelefone()}"
-								var="tipo" itemValue="#{tipo.value}" itemLabel="#{tipo.label}" />
-						</h:selectManyListbox>
-					</p:column>
+							<p:column headerText="Telefone">
+								<h:selectManyListbox
+									value="#{contatoMB.contatoVisao.telefoneSelecionado}">
+									<f:selectItems value="#{contato.listaTelefone}" var="tipo" />
+								</h:selectManyListbox>
+							</p:column>
 
-					<p:column headerText="
+							<p:column headerText="
 								Ações" style="width:40px">
 								<p:commandLink id="btnEditarContato"
 									action="#{contatoMB.redirecionaParaEditarContato(contato)}"
@@ -124,12 +125,16 @@
 										height="20" />
 									<p:tooltip id="toolExcluir" for="btnExcluirContato"
 										value="Excluir" />
+									<!-- 							<f:setPropertyActionListener value="contato" -->
+									<!-- 								target="#{contatoMB.contatoVisao.contato}"></f:setPropertyActionListener> -->
 								</p:commandLink>
-					</p:column>
+							</p:column>
 
-				</p:dataTable>
-			</p:panel>
-		</h:form>
+						</p:dataTable>
+					</p:panel>
+				</h:form>
+			</div>
+		</div>
 	</ui:define>
 
 </ui:composition>

@@ -29,8 +29,23 @@ public class TelefoneService implements Serializable {
 	 * @param telefone
 	 * @return List<Contato>
 	 */
-	public List<Telefone> buscarTodosTelefone(Telefone telefone) {
-		return telefoneDAO.buscarTodos(telefone);
+	public List<Telefone> buscarTodosTelefone() {
+		return telefoneDAO.buscarTodos();
+	}
+	
+	/**
+	 * 
+	 * @param telefone
+	 */
+	public void remover(Telefone telefone) {
+		telefoneDAO.remover(telefone);
 	}
 
+	/**
+	 * 
+	 * @param telefone
+	 */
+	public Boolean verificaTelefoneExistente(Telefone telefone) {
+		return telefoneDAO.verificaTelefoneExistente(telefone);
+	}
 }

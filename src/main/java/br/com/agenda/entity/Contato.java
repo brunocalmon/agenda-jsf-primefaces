@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "contato", schema = "agd")
 @SequenceGenerator(name = "contato_sequence", sequenceName = "contato_sequence", allocationSize = 1, initialValue = 0)
-public class Contato implements Serializable {
+public class Contato extends Entidade implements Serializable {
 
 	private static final long serialVersionUID = 3269376878922748348L;
 
@@ -37,7 +37,7 @@ public class Contato implements Serializable {
 	@Column(name = "dt_entrada")
 	private Date dtEntrada;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "contato")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "contato", targetEntity = Telefone.class, orphanRemoval = true)
 	private List<Telefone> listaTelefone;
 
 	public Long getIdContato() {
@@ -95,6 +95,11 @@ public class Contato implements Serializable {
 
 	public void setListaTelefone(List<Telefone> listaTelefone) {
 		this.listaTelefone = listaTelefone;
+	}
+
+	@Override
+	public Object getPk() {
+		return idContato;
 	}
 
 }

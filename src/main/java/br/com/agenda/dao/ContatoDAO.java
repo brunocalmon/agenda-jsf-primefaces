@@ -44,6 +44,25 @@ public class ContatoDAO extends DAO<Contato> {
 	}
 
 	/**
+	 * 
+	 * @param nome
+	 * @return List<Contato>
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Contato> listaContatosComTelefones() {
+		StringBuilder sql = new StringBuilder("");
+		sql.append(" SELECT DISTINCT c FROM Contato c ");
+		sql.append(" JOIN FETCH c.listaTelefone");
+		try {
+			Query query = em.createQuery(sql.toString());
+			return (List<Contato>) query.getResultList();
+		} catch (NoResultException e) {
+			LOGGER.info(e);
+			return Collections.emptyList();
+		}
+	}
+
+	/**
 	 * Faz busca por telefone
 	 * 
 	 * @param nuTelefone
@@ -54,8 +73,7 @@ public class ContatoDAO extends DAO<Contato> {
 
 		sql.append("SELECT c.* FROM Contato c ");
 		sql.append("LEFT JOIN Telefone t ON t.idContato = c.idContato AND t.nuTelefone = :nuTelefone");
-		// sql.append(" SELECT t.idContato FROM Telefone t ");
-		// sql.append(" WHERE ct.pk.telefone.nuTelefone =:nuTelefone ");
+
 		try {
 			Query query = em.createQuery(sql.toString());
 			query.setParameter("nuTelefone", nuTelefone);
@@ -66,25 +84,25 @@ public class ContatoDAO extends DAO<Contato> {
 		}
 	}
 
-	@Override
-	public void remover(Contato contato) {
-		StringBuilder sql = new StringBuilder("");
-		sql.append(" SELECT e FROM " + contato.getClass().getName() + " e ");
-		sql.append(" WHERE e.idContato = :id ");
-		try {
-			Query query = em.createQuery(sql.toString());
-			query.setParameter("id", contato.getIdContato());
-			if (!query.getResultList().isEmpty()) {
-				sql = new StringBuilder("");
-				sql.append(" DELETE FROM " + contato.getClass().getName() + " e");
-				sql.append(" WHERE e.idContato = " + contato.getIdContato());
-				query = em.createQuery(sql.toString());
-				query.executeUpdate();
-			}
-		} catch (NoResultException e) {
-			LOGGER.info(e);
-		}
-	}
+	// @Override
+	// public void remover(Contato contato) {
+	// StringBuilder sql = new StringBuilder("");
+	// sql.append(" SELECT e FROM " + contato.getClass().getName() + " e ");
+	// sql.append(" WHERE e.idContato = :id ");
+	// try {
+	// Query query = em.createQuery(sql.toString());
+	// query.setParameter("id", contato.getIdContato());
+	// if (!query.getResultList().isEmpty()) {
+	// sql = new StringBuilder("");
+	// sql.append(" DELETE FROM " + contato.getClass().getName() + " e");
+	// sql.append(" WHERE e.idContato = " + contato.getIdContato());
+	// query = em.createQuery(sql.toString());
+	// query.executeUpdate();
+	// }
+	// } catch (NoResultException e) {
+	// LOGGER.info(e);
+	// }
+	// }
 	//
 	// /**
 	// *

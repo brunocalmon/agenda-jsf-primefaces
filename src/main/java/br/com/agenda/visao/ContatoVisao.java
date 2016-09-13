@@ -23,6 +23,7 @@ public class ContatoVisao {
 	private List<Contato> listaResultadoContato;
 	private Integer tipoBuscaContatoSelecionado;
 	private Telefone telefoneSelecionado;
+	private Integer acao;
 
 	public Contato getContato() {
 		return contato;
@@ -94,5 +95,13 @@ public class ContatoVisao {
 
 	public void setSelectItemTelefones(List<SelectItem> selectItemTelefones) {
 		this.selectItemTelefones = selectItemTelefones;
+	}
+
+	public Integer getAcao() {
+		return acao;
+	}
+
+	public void setAcao(Integer acao) {
+		this.acao = acao;
 	}
 }

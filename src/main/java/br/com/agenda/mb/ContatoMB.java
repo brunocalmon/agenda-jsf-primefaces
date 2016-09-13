@@ -62,8 +62,7 @@ public class ContatoMB extends GenericMB {
 		if (ValidacoesContato.nullOrEmpty(this.getContatoVisao().getContato())) {
 			this.getContatoVisao().setContato(new Contato());
 
-			this.getContatoVisao()
-					.setListaResultadoContato(contatoService.buscarTodosContatos(this.getContatoVisao().getContato()));
+			this.getContatoVisao().setListaResultadoContato(contatoService.buscarTodosContatosComTelefones());
 		}
 		if (ValidacoesContato.nullOrEmpty(this.getContatoVisao().getTipoBuscaContato())) {
 			this.iniciaTipoBuscaContato();
@@ -73,6 +72,10 @@ public class ContatoMB extends GenericMB {
 			this.getContatoVisao().getContato().setListaTelefone(new ArrayList<Telefone>());
 			adicionaNovoTelefoneLista();
 		}
+		
+		if(null == getContatoVisao().getAcao()){
+			getContatoVisao().setAcao(0);
+		}
 	}
 
 	/**
@@ -81,7 +84,9 @@ public class ContatoMB extends GenericMB {
 	public void adicionaNovoTelefoneLista() {
 		Telefone telefone = new Telefone();
 		telefone.setDtTelefone(new Date());
+		telefone.setContato(getContatoVisao().getContato());
 		getContatoVisao().getContato().getListaTelefone().add(telefone);
+		
 		contador++;
 	}
 
@@ -95,9 +100,9 @@ public class ContatoMB extends GenericMB {
 
 		this.getContatoVisao().getContato().setDtEntrada(new Date());
 
-		processarTelefones();
-
 		try {
+			this.setContatoVisao(ValidacoesContato.processarTelefones(this.getContatoVisao(), this.telefoneService));
+
 			ValidacoesContato.validaInclusaoContato(this.getContatoVisao().getContato());
 			contatoService.inserir(this.getContatoVisao().getContato());
 			super.exibirMsgSucesso(
@@ -111,27 +116,28 @@ public class ContatoMB extends GenericMB {
 		return redirecionaParaConsultarContato();
 	}
 
-	private void processarTelefones() {
-		Boolean duplicado = Boolean.FALSE;
-		Boolean isRepetidoBanco;
-		Boolean isRepetidoTela;
+	/**
+	 * 
+	 * @param contato
+	 * @return PAGE_CONSULTA_CONTATO
+	 */
+	public String editarContato() {
+		this.getContatoVisao().getContato()
+				.setNoContato(StringUtil.limpaEspacosVazios(this.getContatoVisao().getContato().getNoContato()));
 
-		isRepetidoTela = ValidacoesContato
-				.verificaTelefonesDuplicadosEmTela(getContatoVisao().getContato().getListaTelefone());
-		isRepetidoBanco = ValidacoesContato
-				.verificaTelefoneDuplicadoNaBase(getContatoVisao().getContato().getListaTelefone(), telefoneService);
+		try {
+			this.setContatoVisao(ValidacoesContato.processarTelefones(this.getContatoVisao(), this.telefoneService));
 
-		if (isRepetidoTela || isRepetidoBanco) {
-			duplicado = true;
+			ValidacoesContato.validaInclusaoContato(this.getContatoVisao().getContato());
+
+			contatoService.atualizar(this.getContatoVisao().getContato());
+			super.exibirMsgSucesso(
+					"Contato " + this.getContatoVisao().getContato().getNoContato() + " atualizado com sucesso!");
+		} catch (AgendaException ae) {
+			super.exibirMsgErro(ae.getMessage());
+			LOGGER.info(ae);
 		}
-
-		if (duplicado) {
-			super.exibirMsgErro("Telefone já cadastrado.");
-		} else {
-			for (Telefone t : getContatoVisao().getContato().getListaTelefone()) {
-				t.setNuTelefone(StringUtil.desformatString("(##) ####-####", t.getNuTelefone()));
-			}
-		}
+		return this.redirecionaParaConsultarContato();
 	}
 
 	/**
@@ -163,24 +169,6 @@ public class ContatoMB extends GenericMB {
 	}
 
 	/**
-	 * 
-	 * @param contato
-	 * @return PAGE_CONSULTA_CONTATO
-	 */
-	public String editarContato(Contato contato) {
-		try {
-			ValidacoesContato.validaEdicaoContato(this.getContatoVisao().getContato());
-			contatoService.atualizar(this.getContatoVisao().getContato());
-			super.exibirMsgSucesso(
-					"Contato " + this.getContatoVisao().getContato().getNoContato() + " atualizado com sucesso!");
-		} catch (AgendaException ae) {
-			super.exibirMsgErro(ae.getMessage());
-			LOGGER.info(ae);
-		}
-		return this.redirecionaParaConsultarContato();
-	}
-
-	/**
 	 * Exclui contato
 	 * 
 	 * @param contato
@@ -190,7 +178,7 @@ public class ContatoMB extends GenericMB {
 			contatoService.remover(contato);
 			init();
 		} catch (Exception e) {
-			super.exibirMsgErro("Ops! Por algum motivo, não conseguimos remover este contato. =(");
+			super.exibirMsgErro("Ops! Por algum motivo, não conseguimos remover este contato.");
 			LOGGER.info(e);
 		}
 	}
@@ -260,6 +248,7 @@ public class ContatoMB extends GenericMB {
 	 * @return PageEnum.PAGE_EDITA_CONTATO.getValor()
 	 */
 	public String redirecionaParaEditarContato(Contato contato) {
+		getContatoVisao().setAcao(2);
 		this.getContatoVisao().setContato(contato);
 		super.setFlash(CONTATO_VISAO, this.getContatoVisao());
 		return PageEnum.PAGE_EDITA_CONTATO.getValor();
@@ -271,6 +260,7 @@ public class ContatoMB extends GenericMB {
 	 * @return String
 	 */
 	public String redirecionaParaIncluirContato() {
+		getContatoVisao().setAcao(1);
 		return PageEnum.PAGE_INCLUI_CONTATO.getValor();
 	}
 
@@ -280,6 +270,7 @@ public class ContatoMB extends GenericMB {
 	 * @return String
 	 */
 	public String redirecionaParaConsultarContato() {
+		getContatoVisao().setAcao(0);
 		return PageEnum.PAGE_CONSULTA_CONTATO.getValor();
 	}
 

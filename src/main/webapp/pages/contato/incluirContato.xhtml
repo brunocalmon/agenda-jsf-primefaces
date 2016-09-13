@@ -6,7 +6,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui" template="/templates/main.xhtml">
 
-	<ui:define name="breadcrumb">
+	<ui:define name="content">
 		<h:form prependId="false" id="breadCrumbsForm">
 			<p:breadCrumb homeDisplay="false" id="breadCrumb">
 				<p:menuitem value="Início" action="/pages/home/home.xhtml" />
@@ -15,66 +15,72 @@
 					action="/pages/contato/incluirContato.jsf" />
 			</p:breadCrumb>
 		</h:form>
-	</ui:define>
 
-	<ui:define name="content">
-		<h:form prependId="false" id="formIncluirContato">
-			<p:messages autoUpdate="true" />
-			<p:panel styleClass="clearfix">
-				<p:panelGrid columns="2" styleClass="tabelaIncluir"
-					id="painelIncluirContato">
+		<div align="center">
+			<div id="div-content-middle" align="justify">
+				<h:form prependId="false" id="formIncluirContato">
+					<p:messages autoUpdate="true" />
+					<p:panel styleClass="clearfix">
+						<div id="div-painel-incluir">
+							<p:panelGrid columns="2" styleClass="tabelaIncluir"
+								id="painelIncluirContato">
 
-					<h:panelGrid columns="2" id="panelNome">
-						<p:outputLabel value="Nome: " id="lblIncluirContatoNome" />
-						<p:inputText value="#{contatoMB.contatoVisao.contato.noContato}"
-							required="true" requiredMessage="Insira o nome do contato."
-							id="inputIncluirContatoNome" />
-					</h:panelGrid>
-					<div />
-					<ui:repeat var="telefone"
-						value="#{contatoMB.contatoVisao.contato.listaTelefone}">
-						<h:panelGrid columns="3" id="repeatTelefone">
-							<p:outputLabel value="Telefone: " id="lblIncluirContatoTelefone"
-								styleClass="lbl-incluir-telefone" />
-							<p:inputMask value="#{telefone.nuTelefone}" mask="(99) 9999-9999"
-								required="true" requiredMessage="Insira o número de telefone."
-								styleClass="input-incluir-telefone">
-								<p:ajax event="blur" partialSubmit="true"
-									listener="#{contatoMB.verificaTelefoneDuplicadosEmTela(contatoMB.contatoVisao.contato.listaTelefone)}"></p:ajax>
-							</p:inputMask>
+								<h:panelGrid columns="2" id="panelNome">
+									<p:outputLabel value="Nome: " id="lblIncluirContatoNome" />
+									<p:inputText
+										value="#{contatoMB.contatoVisao.contato.noContato}"
+										required="true" requiredMessage="Insira o nome do contato."
+										id="inputIncluirContatoNome" />
+								</h:panelGrid>
 
-							<p:commandLink id="btnExcluirContato"
-								action="#{contatoMB.removeTelefoneParaIncluir(telefone)}"
-								update="painelIncluirContato" immediate="true"
-								partialSubmit="true" process="painelIncluirContato">
-								<p:graphicImage id="imageExcluirContato"
-									value="/resources/img/icon/remove-icon.png" width="20"
-									height="20" />
-								<p:tooltip id="toolExcluir" for="btnExcluirContato"
-									value="Excluir" />
-							</p:commandLink>
-						</h:panelGrid>
-					</ui:repeat>
-					<div />
-					<p:commandButton action="#{contatoMB.adicionaNovoTelefoneLista()}"
-						update="painelIncluirContato" ajax="false" immediate="true"
-						partialSubmit="true" process="painelIncluirContato" value="+" />
+								<div id="campoTelefone">
+									<ui:repeat varStatus="i" var="telefone"
+										value="#{contatoMB.contatoVisao.contato.listaTelefone}">
+										<div class="campo-telefone-repeat">
+											<p:outputLabel value="Telefone: "
+												id="lblIncluirContatoTelefone" />
+											<p:inputMask value="#{telefone.nuTelefone}"
+												mask="(99) 9999-9999" required="true"
+												requiredMessage="Insira o número de telefone."
+												styleClass="input-incluir-telefone">
+												<p:ajax event="blur" partialSubmit="true"
+													listener="#{contatoMB.verificaTelefoneDuplicadosEmTela(contatoMB.contatoVisao.contato.listaTelefone)}"></p:ajax>
+											</p:inputMask>
 
+											<p:commandLink id="btnExcluirContato"
+												action="#{contatoMB.removeTelefoneParaIncluir(telefone)}"
+												update="painelIncluirContato" immediate="true"
+												partialSubmit="true" process="painelIncluirContato">
+												<p:graphicImage id="imageExcluirContato"
+													value="/resources/img/icon/remove-icon.png" width="20"
+													height="20" />
+												<p:tooltip id="toolExcluir" for="btnExcluirContato"
+													value="Excluir" />
+											</p:commandLink>
+											<p:commandButton rendered="#{i.last}"
+												action="#{contatoMB.adicionaNovoTelefoneLista()}"
+												update="painelIncluirContato" ajax="false" immediate="true"
+												partialSubmit="true" process="painelIncluirContato"
+												value="+" />
+										</div>
+									</ui:repeat>
+								</div>
+							</p:panelGrid>
+						</div>
 
-					<p:commandButton action="#{contatoMB.incluirContato()}"
-						value="Incluir" ajax="false" id="btnIncluiContato" />
-					<p:commandButton value="Limpar" ajax="false"
-						update="painelIncluirContato"
-						actionListener="#{contatoMB.limpaFiltroContato()}"
-						process="painelIncluirContato" immediate="true"
-						partialSubmit="true" id="btnReset" styleClass="float-right" />
-				</p:panelGrid>
+						<div id="div-botoes-incluir">
+							<p:commandButton action="#{contatoMB.incluirContato()}"
+								value="Incluir" ajax="false" id="btnIncluiContato"
+								styleClass="float-right" />
 
-				<p:commandButton id="btnVoltar" value="Voltar"
-					action="#{contatoMB.redirecionaParaConsultarContato()}"
-					immediate="true" styleClass="float-right" />
-			</p:panel>
-		</h:form>
+							<p:commandButton id="btnVoltar" value="Voltar"
+								action="#{contatoMB.redirecionaParaConsultarContato()}"
+								immediate="true" styleClass="float-right" />
+						</div>
+					</p:panel>
+				</h:form>
+			</div>
+		</div>
 	</ui:define>
 
 </ui:composition>

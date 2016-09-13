@@ -8,7 +8,6 @@ import javax.ejb.Stateless;
 import javax.inject.Named;
 
 import br.com.agenda.dao.ContatoDAO;
-import br.com.agenda.dao.TelefoneDAO;
 import br.com.agenda.entity.Contato;
 
 /**
@@ -24,8 +23,6 @@ public class ContatoService implements Serializable {
 
 	@EJB
 	private ContatoDAO contatoDAO;
-	@EJB
-	private TelefoneDAO telefoneDAO;
 
 	/**
 	 * 
@@ -72,10 +69,19 @@ public class ContatoService implements Serializable {
 	/**
 	 * 
 	 * @param contato
-	 * @return List<Contato> 
+	 * @return List<Contato>
 	 */
-	public List<Contato> buscarTodosContatos(Contato contato) {
-		return contatoDAO.buscarTodos(contato);
+	public List<Contato> buscarTodosContatosSemTelefone() {
+		return contatoDAO.buscarTodos();
+	}
+
+	/**
+	 * 
+	 * @param contato
+	 * @return List<Contato>
+	 */
+	public List<Contato> buscarTodosContatosComTelefones() {
+		return contatoDAO.listaContatosComTelefones();
 	}
 
 }

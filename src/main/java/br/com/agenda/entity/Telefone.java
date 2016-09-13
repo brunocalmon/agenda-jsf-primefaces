@@ -6,13 +6,14 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import br.com.agenda.util.StringUtil;
 
 /**
  * 
@@ -22,7 +23,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "telefone", schema = "agd")
 @SequenceGenerator(name = "telefone_sequence", sequenceName = "telefone_sequence", allocationSize = 1, initialValue = 0)
-public class Telefone implements Serializable {
+public class Telefone extends Entidade implements Serializable {
 
 	private static final long serialVersionUID = 3269376878922748348L;
 
@@ -37,8 +38,8 @@ public class Telefone implements Serializable {
 	@Column(name = "dt_telefone")
 	private Date dtTelefone;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_contato")
+	@JoinColumn(name = "fk_contato", referencedColumnName = "id_contato")
+	@ManyToOne(optional = false, cascade = { CascadeType.REFRESH })
 	private Contato contato;
 
 	public Long getIdTelefone() {
@@ -96,6 +97,16 @@ public class Telefone implements Serializable {
 		} else if (!idTelefone.equals(other.idTelefone))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return StringUtil.formatString("(##) ####-####", nuTelefone);
+	}
+
+	@Override
+	public Object getPk() {
+		return idTelefone;
 	}
 
 }

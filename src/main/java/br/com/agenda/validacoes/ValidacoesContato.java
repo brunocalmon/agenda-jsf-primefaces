@@ -1,5 +1,6 @@
 package br.com.agenda.validacoes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,8 @@ import br.com.agenda.entity.Contato;
 import br.com.agenda.entity.Telefone;
 import br.com.agenda.exceptions.AgendaException;
 import br.com.agenda.service.TelefoneService;
+import br.com.agenda.util.StringUtil;
+import br.com.agenda.visao.ContatoVisao;
 
 /**
  * 
@@ -34,14 +37,6 @@ public abstract class ValidacoesContato extends Validacoes {
 		if (nullOrEmpty(contato.getListaTelefone())) {
 			throw new AgendaException("Insira pelo menos um telefone");
 		}
-//		for (ContatoTelefone ct : contato.getListaTelefone()) {
-//			if (nullOrEmpty(ct.getPk().getTelefone().getNuTelefone()))
-//				throw new AgendaException("Preencha todos os campos de telefone ou delete o campo.");
-//		}
-		/*
-		 * if (nullOrEmpty(contato.getNuTelefone())) { throw new
-		 * AgendaException("Campo telefone não pode estar vazio"); }
-		 */
 	}
 
 	/**
@@ -65,21 +60,11 @@ public abstract class ValidacoesContato extends Validacoes {
 	/**
 	 * 
 	 * @param listaTelefone
-	 * @return
+	 * @param telefoneService
+	 * @return bool
 	 */
-	public static boolean verificaTelefoneDuplicadoNaBase(List<Telefone> listaTelefone,
-			TelefoneService telefoneService) {
-		List<Telefone> telefonesBd = telefoneService.buscarTodosTelefone(new Telefone());
-
-		for (Telefone telefone : telefonesBd) {
-			for (Telefone tel : listaTelefone) {
-				if (tel.getNuTelefone() == telefone.getNuTelefone()) {
-					return true;
-				}
-			}
-		}
-
-		return false;
+	public static boolean verificaTelefoneDuplicadoNaBase(Telefone telefone, TelefoneService telefoneService) {
+		return telefoneService.verificaTelefoneExistente(telefone);
 	}
 
 	/**
@@ -103,5 +88,40 @@ public abstract class ValidacoesContato extends Validacoes {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * 
+	 * @param contatoVisao
+	 * @param telefoneService
+	 * @return ContatoVisao
+	 * @throws AgendaException
+	 */
+	public static ContatoVisao processarTelefones(ContatoVisao contatoVisao, TelefoneService telefoneService)
+			throws AgendaException {
+		Boolean isRepetidoBanco = Boolean.FALSE;
+		Boolean isRepetidoTela;
+
+		List<Telefone> listTel = contatoVisao.getContato().getListaTelefone();
+		List<Telefone> auxTel = new ArrayList<Telefone>();
+		for (Telefone t : listTel) {
+			t.setNuTelefone(StringUtil.desformatString("(##) ####-####", t.getNuTelefone()));
+			auxTel.add(t);
+		}
+		contatoVisao.getContato().setListaTelefone(auxTel);
+
+		isRepetidoTela = ValidacoesContato.verificaTelefonesDuplicadosEmTela(listTel);
+
+		for (Telefone telefone : listTel) {
+			isRepetidoBanco = ValidacoesContato.verificaTelefoneDuplicadoNaBase(telefone, telefoneService);
+			if (isRepetidoBanco) {
+				break;
+			}
+		}
+
+		if (isRepetidoTela || isRepetidoBanco) {
+			throw new AgendaException("Telefone já cadastrado.");
+		}
+		return contatoVisao;
 	}
 }

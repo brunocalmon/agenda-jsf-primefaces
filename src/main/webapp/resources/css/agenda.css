@@ -22,6 +22,10 @@
 	border: none;
 }
 
+.text-align-center {
+	text-align: center;
+}
+
 .ui-panelgrid .ui-panelgrid-cell {
 	border: none !important;
 }
@@ -62,12 +66,11 @@
 	filter: hue-rotate(45deg);
 }
 
-body form:nth-child(4) {
+#div-content-middle {
 	border: 1px #6f3e53 solid;
 	border-radius: 5px;
 	box-shadow: 0px 0px 5px grey;
-	text-align: center;
-	vertical-align: middle;
+	width: 75%;
 }
 
 #dataTable_paginator_top, #dataTable_paginator_bottom {
@@ -76,6 +79,10 @@ body form:nth-child(4) {
 }
 
 /*	agenda */
+#dataTable_data {
+	text-align: center;
+}
+
 .tabelaIncluir {
 	display: inline;
 }
@@ -88,16 +95,20 @@ textarea {
 	width: 227px !important;
 }
 
-#dataTable_data {
-	text-align: center;
-}
-
 .colAcoes {
 	width: 40px;
 }
 
 .left-50 {
 	left: 50%;
+}
+
+#panelNome td {
+	width: 100px;
+}
+
+#painelIncluirContato tr td:FIRST-CHILD {
+	width: 100px;
 }
 
 /*	contato */
@@ -113,38 +124,24 @@ textarea {
 	height: 80px;
 }
 
-#tipoBuscaContato_label {
-	width: 182px !important;
+.campo-telefone-repeat {
+	display: flex;
+	font-size: initial;
+	padding: 11px 11px 11px 0;
 }
 
-/*	tarefa */
-#tabelaTarefas {
+.campo-telefone-repeat label {
+	margin-right: 40px;
+}
+
+.campo-telefone-repeat a {
+	padding: 5px;
+}
+
+#div-painel-incluir {
+	display: initial;
+}
+
+#div-botoes-incluir {
 	display: inline;
-}
-
-#btnNovoTarefa {
-	float: right;
-}
-
-#btnNovoTarefa	img {
-	height: 80px;
-}
-
-/*	lembrete */
-#tabelaLembretes {
-	display: inline;
-}
-
-#btnNovoLembrete {
-	float: right;
-}
-
-#btnNovoLembrete	img {
-	height: 80px;
-}
-
-#buscaContatoPanel_content, #buscaTarefaPanel_content,
-	#buscaLembretePanel_content {
-	width: 550px;
-	margin: 0 auto;
 }

@@ -10,7 +10,7 @@ import javax.faces.context.FacesContext;
  * @author bruno.calmon
  *
  */
-public class GenericMB implements Serializable {
+public abstract class GenericMB implements Serializable {
 
 	private static final long serialVersionUID = -2948837851449626084L;
 
