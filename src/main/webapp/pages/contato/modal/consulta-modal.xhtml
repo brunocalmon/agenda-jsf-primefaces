@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog header="Excluir Contato" widgetVar="modal-excluir-contato"
+		modal="true" height="100" resizable="false">
+
+		<div class="ui-grid ui-grid-responsive">
+			<div class="ui-grid-row">
+				<h:outputText value="Deseja realmente excluir este contato?" />
+			</div>
+			<div class="ui-grid-row absolute-bottom padding-modal-buttons"
+				align="justify" style="padding: 10px 25%">
+				<p:commandButton id="btnModalExcluirContato" value="Confirmar"
+					action="#{contatoMB.excluirContato()}" update="dataTable"
+					immediate="true" oncomplete="PF('modal-excluir-contato').hide();">
+				</p:commandButton>
+			</div>
+		</div>
+	</p:dialog>
+
+</ui:composition>

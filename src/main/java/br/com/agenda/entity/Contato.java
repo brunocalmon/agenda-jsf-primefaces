@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "contato", schema = "agd")
 @SequenceGenerator(name = "contato_sequence", sequenceName = "contato_sequence", allocationSize = 1, initialValue = 0)
-public class Contato extends Entidade implements Serializable {
+public class Contato implements Serializable, Entidade{
 
 	private static final long serialVersionUID = 3269376878922748348L;
 
@@ -64,31 +64,6 @@ public class Contato extends Entidade implements Serializable {
 		this.dtEntrada = dtEntrada;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idContato == null) ? 0 : idContato.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Contato other = (Contato) obj;
-		if (idContato == null) {
-			if (other.idContato != null)
-				return false;
-		} else if (!idContato.equals(other.idContato))
-			return false;
-		return true;
-	}
-
 	public List<Telefone> getListaTelefone() {
 		return listaTelefone;
 	}
@@ -100,6 +75,55 @@ public class Contato extends Entidade implements Serializable {
 	@Override
 	public Object getPk() {
 		return idContato;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dtEntrada == null) ? 0 : dtEntrada.hashCode());
+		result = prime * result + ((idContato == null) ? 0 : idContato.hashCode());
+		result = prime * result + ((listaTelefone == null) ? 0 : listaTelefone.hashCode());
+		result = prime * result + ((noContato == null) ? 0 : noContato.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Contato))
+			return false;
+		Contato other = (Contato) obj;
+		if (dtEntrada == null) {
+			if (other.dtEntrada != null)
+				return false;
+		} else if (!dtEntrada.equals(other.dtEntrada))
+			return false;
+		if (idContato == null) {
+			if (other.idContato != null)
+				return false;
+		} else if (!idContato.equals(other.idContato))
+			return false;
+		if (listaTelefone == null) {
+			if (other.listaTelefone != null)
+				return false;
+		} else if (!listaTelefone.equals(other.listaTelefone))
+			return false;
+		if (noContato == null) {
+			if (other.noContato != null)
+				return false;
+		} else if (!noContato.equals(other.noContato))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Contato [idContato=" + idContato + ", noContato=" + noContato + ", dtEntrada=" + dtEntrada
+				+ ", listaTelefone=" + listaTelefone + "]";
 	}
 
 }

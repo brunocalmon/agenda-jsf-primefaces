@@ -6,7 +6,7 @@ package br.com.agenda.entity;
  * @author bruno.calmon
  *
  */
-public abstract class Entidade {
+public interface Entidade {
 
 	public abstract Object getPk();
 

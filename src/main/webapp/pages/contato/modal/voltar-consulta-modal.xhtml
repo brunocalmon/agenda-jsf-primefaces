@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog header="Voltar" widgetVar="modal-voltar-consulta"
+		modal="true" height="100" resizable="false">
+
+		<div class="ui-grid ui-grid-responsive">
+			<div class="ui-grid-row">
+				<h:outputText value="Deseja realmente voltar para tela de contatos?" />
+			</div>
+			<div class="ui-grid-row absolute-bottom padding-modal-buttons"
+				align="justify" style="padding: 10px 25%">
+				<p:commandButton id="btnVoltarModal" value="Confirmar"
+					action="#{contatoMB.redirecionaParaConsultarContato()}"
+					immediate="true" oncomplete="PF('modal-voltar-consulta').hide();"/>
+			</div>
+		</div>
+	</p:dialog>
+
+</ui:composition>

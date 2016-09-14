@@ -36,9 +36,11 @@ public class StringUtil {
 	 */
 	public static String formatString(String mask, String value) {
 		try {
-			MaskFormatter formatter = new MaskFormatter(mask);
-			formatter.setValueContainsLiteralCharacters(false);
-			return formatter.valueToString(value);
+			if (null != value) {
+				MaskFormatter formatter = new MaskFormatter(mask);
+				formatter.setValueContainsLiteralCharacters(false);
+				return formatter.valueToString(value);
+			}
 		} catch (ParseException e) {
 			LOGGER.info(e);
 		}

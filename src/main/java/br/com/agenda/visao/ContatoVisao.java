@@ -19,11 +19,11 @@ public class ContatoVisao {
 	private String telefone;
 	private String email;
 	private List<SelectItem> tipoBuscaContato;
-	private List<SelectItem> selectItemTelefones;
 	private List<Contato> listaResultadoContato;
 	private Integer tipoBuscaContatoSelecionado;
 	private Telefone telefoneSelecionado;
 	private Integer acao;
+	private Contato contatoExcluir;
 
 	public Contato getContato() {
 		return contato;
@@ -89,19 +89,19 @@ public class ContatoVisao {
 		this.telefoneSelecionado = telefoneSelecionado;
 	}
 
-	public List<SelectItem> getSelectItemTelefones() {
-		return selectItemTelefones;
-	}
-
-	public void setSelectItemTelefones(List<SelectItem> selectItemTelefones) {
-		this.selectItemTelefones = selectItemTelefones;
-	}
-
 	public Integer getAcao() {
 		return acao;
 	}
 
 	public void setAcao(Integer acao) {
 		this.acao = acao;
+	}
+
+	public Contato getContatoExcluir() {
+		return contatoExcluir;
+	}
+
+	public void setContatoExcluir(Contato contatoExcluir) {
+		this.contatoExcluir = contatoExcluir;
 	}
 }

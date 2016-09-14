@@ -1,9 +1,21 @@
 @CHARSET "ISO-8859-1";
 
 /*   HEADER */
+.underline {
+	text-decoration: underline;
+}
+
 .clearfix {
 	overflow: auto;
 	zoom: 1;
+}
+
+.padding-modal-buttons {
+	padding: 10px 25%;
+}
+
+.margin-10 {
+	margin: 10px;
 }
 
 .float-left {
@@ -24,6 +36,20 @@
 
 .text-align-center {
 	text-align: center;
+}
+
+.padding-auto {
+	padding: auto;
+}
+
+.absolute-bottom {
+	position: absolute;
+	bottom: 0;
+	padding: 10px;
+}
+
+.margin-auto {
+	margin: auto;
 }
 
 .ui-panelgrid .ui-panelgrid-cell {
@@ -144,4 +170,9 @@ textarea {
 
 #div-botoes-incluir {
 	display: inline;
+}
+
+.plus-icon {
+	-webkit-filter: hue-rotate(45deg);
+	filter: hue-rotate(45deg);
 }

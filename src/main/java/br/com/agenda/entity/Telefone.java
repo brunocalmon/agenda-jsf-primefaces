@@ -23,7 +23,7 @@ import br.com.agenda.util.StringUtil;
 @Entity
 @Table(name = "telefone", schema = "agd")
 @SequenceGenerator(name = "telefone_sequence", sequenceName = "telefone_sequence", allocationSize = 1, initialValue = 0)
-public class Telefone extends Entidade implements Serializable {
+public class Telefone implements Serializable, Entidade {
 
 	private static final long serialVersionUID = 3269376878922748348L;
 
@@ -54,6 +54,10 @@ public class Telefone extends Entidade implements Serializable {
 		return nuTelefone;
 	}
 
+	public String getNuTelefoneFormatado() {
+		return StringUtil.formatString("(##) ####-####", nuTelefone);
+	}
+
 	public void setNuTelefone(String nuTelefone) {
 		this.nuTelefone = nuTelefone;
 	}
@@ -75,10 +79,18 @@ public class Telefone extends Entidade implements Serializable {
 	}
 
 	@Override
+	public Object getPk() {
+		return idTelefone;
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((contato == null) ? 0 : contato.hashCode());
+		result = prime * result + ((dtTelefone == null) ? 0 : dtTelefone.hashCode());
 		result = prime * result + ((idTelefone == null) ? 0 : idTelefone.hashCode());
+		result = prime * result + ((nuTelefone == null) ? 0 : nuTelefone.hashCode());
 		return result;
 	}
 
@@ -88,25 +100,36 @@ public class Telefone extends Entidade implements Serializable {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof Telefone))
 			return false;
 		Telefone other = (Telefone) obj;
+		if (contato == null) {
+			if (other.contato != null)
+				return false;
+		} else if (!contato.equals(other.contato))
+			return false;
+		if (dtTelefone == null) {
+			if (other.dtTelefone != null)
+				return false;
+		} else if (!dtTelefone.equals(other.dtTelefone))
+			return false;
 		if (idTelefone == null) {
 			if (other.idTelefone != null)
 				return false;
 		} else if (!idTelefone.equals(other.idTelefone))
+			return false;
+		if (nuTelefone == null) {
+			if (other.nuTelefone != null)
+				return false;
+		} else if (!nuTelefone.equals(other.nuTelefone))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return StringUtil.formatString("(##) ####-####", nuTelefone);
-	}
-
-	@Override
-	public Object getPk() {
-		return idTelefone;
+		return "Telefone [idTelefone=" + idTelefone + ", nuTelefone=" + nuTelefone + ", dtTelefone=" + dtTelefone
+				+ ", contato=" + contato + "]";
 	}
 
 }

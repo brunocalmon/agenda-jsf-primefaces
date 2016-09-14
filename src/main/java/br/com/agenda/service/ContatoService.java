@@ -62,7 +62,7 @@ public class ContatoService implements Serializable {
 	 * @param nuTelefone
 	 * @return List<Contato>
 	 */
-	public Contato buscarContatoPorTelefone(String nuTelefone) {
+	public List<Contato> buscarContatoPorTelefone(String nuTelefone) {
 		return contatoDAO.buscarContatoPorTelefone(nuTelefone);
 	}
 

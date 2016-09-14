@@ -6,6 +6,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
+import br.com.agenda.entity.Telefone;
 import br.com.agenda.util.StringUtil;
 
 /**
@@ -15,11 +16,11 @@ import br.com.agenda.util.StringUtil;
  */
 @FacesConverter("telefoneConverter")
 public class TelefoneConverter implements Converter {
-	private static final String TELEFONE_MASCARA = "(##) ####-####"; 
-	
+	private static final String TELEFONE_MASCARA = "(##) ####-####";
+
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) throws ConverterException {
-		return arg2;
+		return StringUtil.formatString(TELEFONE_MASCARA, arg2);
 	}
 
 	@Override
@@ -27,6 +28,6 @@ public class TelefoneConverter implements Converter {
 		if (arg2 == null) {
 			return "";
 		}
-		return StringUtil.formatString(TELEFONE_MASCARA, arg2.toString());
+		return StringUtil.formatString(TELEFONE_MASCARA, ((Telefone) arg2).getNuTelefone());
 	}
 }

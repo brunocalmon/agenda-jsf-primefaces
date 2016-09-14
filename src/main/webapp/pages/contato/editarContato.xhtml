@@ -6,7 +6,9 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui" template="/templates/main.xhtml">
 
-	<ui:define name="content">
+	<ui:define name="title">Editar Contato</ui:define>
+
+	<ui:define name="breadcrumb">
 		<h:form prependId="false" id="breadCrumbsForm">
 			<p:breadCrumb homeDisplay="false" id="breadCrumb">
 				<p:menuitem value="Início" action="/pages/home/home.xhtml" />
@@ -14,71 +16,81 @@
 				<p:menuitem value="Editar" action="/pages/contato/editarContato.jsf" />
 			</p:breadCrumb>
 		</h:form>
+	</ui:define>
 
-		<div align="center">
-			<div id="div-content-middle" align="justify">
-				<h:form prependId="false" id="formEditarContato">
-					<p:messages autoUpdate="true" />
-					<p:panel styleClass="clearfix">
-						<div id="div-painel-incluir">
-							<p:panelGrid columns="2" styleClass="tabelaEditar"
-								id="painelEditarContato">
+	<ui:define name="content">
+		<h:form prependId="false" id="formEditarContato">
+			<p:messages autoUpdate="true" />
+			<p:panel styleClass="clearfix">
 
-								<h:panelGrid columns="2" id="panelNome">
-									<p:outputLabel value="Nome: " id="lblEditarContatoNome" />
-									<p:inputText
-										value="#{contatoMB.contatoVisao.contato.noContato}"
-										required="true" requiredMessage="Insira o nome do contato."
-										id="inputEditarContatoNome" />
-								</h:panelGrid>
+				<div id="div-painel-incluir">
+					<p:panelGrid columns="2" styleClass="tabelaEditar"
+						id="painelEditarContato">
 
-								<div id="campoTelefone">
-									<ui:repeat varStatus="i" var="telefone"
-										value="#{contatoMB.contatoVisao.contato.listaTelefone}">
-										<div class="campo-telefone-repeat">
-											<p:outputLabel value="Telefone: "
-												id="lblIncluirContatoTelefone" />
-											<p:inputMask value="#{telefone.nuTelefone}"
-												mask="(99) 9999-9999" required="true"
-												requiredMessage="Insira o número de telefone."
-												styleClass="input-incluir-telefone">
-												<p:ajax event="blur" partialSubmit="true"
-													listener="#{contatoMB.verificaTelefoneDuplicadosEmTela(contatoMB.contatoVisao.contato.listaTelefone)}"></p:ajax>
-											</p:inputMask>
+						<h:panelGrid columns="2" id="panelNome">
+							<p:outputLabel value="Nome: " id="lblEditarContatoNome" />
+							<p:inputText value="#{contatoMB.contatoVisao.contato.noContato}"
+								required="true" requiredMessage="Insira o nome do contato."
+								id="inputEditarContatoNome" />
+						</h:panelGrid>
 
-											<p:commandLink id="btnExcluirContato"
-												action="#{contatoMB.removeTelefoneParaIncluir(telefone)}"
-												update="painelEditarContato" immediate="true"
-												partialSubmit="true" process="painelEditarContato">
-												<p:graphicImage id="imageExcluirContato"
-													value="/resources/img/icon/remove-icon.png" width="20"
-													height="20" />
-												<p:tooltip id="toolExcluir" for="btnExcluirContato"
-													value="Excluir" />
-											</p:commandLink>
-											<p:commandButton rendered="#{i.last}"
-												action="#{contatoMB.adicionaNovoTelefoneLista()}"
-												update="painelEditarContato" ajax="false" immediate="true"
-												partialSubmit="true" process="painelEditarContato" value="+" />
-										</div>
-									</ui:repeat>
+						<div id="campoTelefone">
+							<ui:repeat varStatus="i" var="telefone"
+								value="#{contatoMB.contatoVisao.contato.listaTelefone}">
+								<div class="campo-telefone-repeat">
+									<p:outputLabel value="Telefone: "
+										id="lblIncluirContatoTelefone" />
+									<p:inputMask value="#{telefone.nuTelefone}"
+										mask="(99) 9999-9999" required="true"
+										requiredMessage="Insira o número de telefone."
+										styleClass="input-incluir-telefone">
+										<p:ajax event="blur" partialSubmit="true"
+											listener="#{contatoMB.verificaTelefoneDuplicadosEmTela(contatoMB.contatoVisao.contato.listaTelefone)}"></p:ajax>
+									</p:inputMask>
+
+									<p:commandLink id="btnExcluirContato"
+										action="#{contatoMB.removeTelefoneParaIncluir(telefone)}"
+										update="painelEditarContato" immediate="true"
+										partialSubmit="true" process="painelEditarContato">
+										<p:graphicImage id="imageExcluirContato"
+											value="/resources/img/icon/remove-icon.png" width="20"
+											height="20" />
+										<p:tooltip id="toolExcluir" for="btnExcluirContato"
+											value="Excluir" />
+									</p:commandLink>
 								</div>
-							</p:panelGrid>
+								
+								<p:commandLink rendered="#{i.last}" id="btnAddCampoTel"
+									action="#{contatoMB.adicionaNovoTelefoneLista()}"
+									update="painelEditarContato" ajax="false" immediate="true"
+									partialSubmit="true" process="painelEditarContato"
+									styleClass="plus-icon">
+									<p:graphicImage id="imageAddCampoTelefone"
+										value="/resources/img/icon/plus-icon.png" width="40"
+										height="40" />
+									<p:tooltip id="toolAddTel" for="btnAddCampoTel"
+										value="Adicionar" />
+								</p:commandLink>
+							</ui:repeat>
 						</div>
+					</p:panelGrid>
+				</div>
 
-						<div id="div-botoes-incluir">
-							<p:commandButton action="#{contatoMB.editarContato()}"
-								value="Editar" ajax="false" id="btnEditaContato"
-								styleClass="float-right" />
+				<div id="div-botoes-incluir">
+					<p:commandButton onclick="PF('modal-editar-contato').show();"
+						value="Editar" id="btnEditaContato" styleClass="float-right" />
 
-							<p:commandButton id="btnVoltar" value="Voltar"
-								action="#{contatoMB.redirecionaParaConsultarContato()}"
-								immediate="true" styleClass="float-right" />
-						</div>
-					</p:panel>
-				</h:form>
-			</div>
-		</div>
+					<p:commandButton id="btnVoltar" value="Voltar"
+						onclick="PF('modal-voltar-consulta').show();" immediate="true"
+						styleClass="float-right" />
+				</div>
+
+			</p:panel>
+
+			<ui:include src="modal/voltar-consulta-modal.xhtml" />
+			<ui:include src="modal/editar-modal.xhtml" />
+
+		</h:form>
 	</ui:define>
 
 </ui:composition>

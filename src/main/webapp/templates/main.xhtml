@@ -7,24 +7,36 @@
 
 	<h:head>
 		<f:view encoding="ISO-8859-1" />
-		<title>#{sessionMB.tituloTela}</title>
+		<!-- Todo 'ui:define' que tiver o mesmo 'name' e estiver dentro de um 'ui-composition' sera inserido neste local. -->
+		<title><ui:insert name="title">Início</ui:insert></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link type="text/css" rel="stylesheet"
 			href="#{resource['css/agenda.css']}" />
 	</h:head>
 
 	<h:body>
-		<ui:insert name="header">
+
+		<div id="div-header">
+			<!-- Uso do 'ui:include' porque o arquivo se encontra no dir de templates. O 'ui:define' nao encontra. -->
 			<ui:include src="/templates/header.xhtml" />
-		</ui:insert>
+		</div>
 
-		<ui:insert name="breadcrumb" />
+		<div id="div-breadcrumb">
+			<!-- Todo 'ui:define' que tiver o mesmo 'name' e estiver dentro de um 'ui-composition' sera inserido neste local. -->
+			<ui:insert name="breadcrumb" />
+		</div>
 
-		<ui:insert name="content" />
+		<div id="div-content" align="center">
+			<div id="div-content-middle" align="justify">
+				<!-- Todo 'ui:define' que tiver o mesmo 'name' e estiver dentro de um 'ui-composition' sera inserido neste local. -->
+				<ui:insert name="content" />
+			</div>
+		</div>
 
-		<ui:insert name="footer">
+		<!-- Uso do 'ui:include' porque o arquivo se encontra no dir de templates. O 'ui:define' nao encontra. -->
+		<div id="div-footer">
 			<ui:include src="/templates/footer.xhtml" />
-		</ui:insert>
-
+		</div>
+		
 	</h:body>
 </ui:composition>

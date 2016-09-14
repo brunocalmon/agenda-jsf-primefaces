@@ -1,7 +1,6 @@
 package br.com.agenda.mb;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -45,8 +44,6 @@ public class ContatoMB extends GenericMB {
 
 	private ContatoVisao contatoVisao;
 
-	private int contador;
-
 	/**
 	 * Inicializador
 	 */
@@ -72,8 +69,8 @@ public class ContatoMB extends GenericMB {
 			this.getContatoVisao().getContato().setListaTelefone(new ArrayList<Telefone>());
 			adicionaNovoTelefoneLista();
 		}
-		
-		if(null == getContatoVisao().getAcao()){
+
+		if (null == getContatoVisao().getAcao()) {
 			getContatoVisao().setAcao(0);
 		}
 	}
@@ -86,8 +83,6 @@ public class ContatoMB extends GenericMB {
 		telefone.setDtTelefone(new Date());
 		telefone.setContato(getContatoVisao().getContato());
 		getContatoVisao().getContato().getListaTelefone().add(telefone);
-		
-		contador++;
 	}
 
 	/**
@@ -156,13 +151,12 @@ public class ContatoMB extends GenericMB {
 	 * Faz consulta
 	 */
 	public void consultaContato() {
-		if (TipoBuscaContatoEnum.NOME.getId().equals(this.getContatoVisao().getTipoBuscaContatoSelecionado())) {
+		if (this.isName()) {
 			this.getContatoVisao()
 					.setListaResultadoContato(contatoService.buscarContatoPorNome(getContatoVisao().getNome()));
-		} else if (TipoBuscaContatoEnum.TELEFONE.getId()
-				.equals(this.getContatoVisao().getTipoBuscaContatoSelecionado())) {
-			this.getContatoVisao().setListaResultadoContato(
-					Arrays.asList(contatoService.buscarContatoPorTelefone(getContatoVisao().getTelefone())));
+		} else if (this.isTel()) {
+			this.getContatoVisao().setListaResultadoContato(contatoService.buscarContatoPorTelefone(
+					StringUtil.desformatString("(##) ####-####", getContatoVisao().getTelefone())));
 		} else {
 			super.exibirMsgErro("Selecione uma forma de pesquisa.");
 		}
@@ -173,9 +167,9 @@ public class ContatoMB extends GenericMB {
 	 * 
 	 * @param contato
 	 */
-	public void excluirContato(Contato contato) {
+	public void excluirContato() {
 		try {
-			contatoService.remover(contato);
+			contatoService.remover(getContatoVisao().getContatoExcluir());
 			init();
 		} catch (Exception e) {
 			super.exibirMsgErro("Ops! Por algum motivo, não conseguimos remover este contato.");
@@ -208,26 +202,6 @@ public class ContatoMB extends GenericMB {
 			}
 		}
 		return 0;
-	}
-
-	/**
-	 * retornas todos telefones de um contato
-	 * 
-	 * @return List<String>
-	 */
-	public List<SelectItem> retornaListaTelefone() {
-		if (ValidacoesContato.nullOrEmpty(getContatoVisao().getSelectItemTelefones())) {
-			getContatoVisao().setSelectItemTelefones(new ArrayList<SelectItem>());
-		}
-
-		if (ValidacoesContato.nullOrEmpty(getContatoVisao().getContato().getListaTelefone())) {
-			for (Telefone telefone : getContatoVisao().getContato().getListaTelefone()) {
-				getContatoVisao().getSelectItemTelefones().add(new SelectItem(telefone, telefone.getNuTelefone()));
-			}
-		} else {
-			getContatoVisao().getSelectItemTelefones().add(new SelectItem("", ""));
-		}
-		return getContatoVisao().getSelectItemTelefones();
 	}
 
 	/**
@@ -280,7 +254,8 @@ public class ContatoMB extends GenericMB {
 	 * </p>
 	 */
 	public void limpaFiltroContato() {
-		this.getContatoVisao().setContato(new Contato());
+		this.getContatoVisao().setNome(null);
+		this.getContatoVisao().setTelefone(null);
 	}
 
 	public ContatoVisao getContatoVisao() {
@@ -291,12 +266,11 @@ public class ContatoMB extends GenericMB {
 		this.contatoVisao = contatoVisao;
 	}
 
-	public int getContador() {
-		return contador;
+	private boolean isTel() {
+		return TipoBuscaContatoEnum.TELEFONE.getId().equals(this.getContatoVisao().getTipoBuscaContatoSelecionado());
 	}
 
-	public void setContador(int contador) {
-		this.contador = contador;
+	private boolean isName() {
+		return TipoBuscaContatoEnum.NOME.getId().equals(this.getContatoVisao().getTipoBuscaContatoSelecionado());
 	}
-
 }

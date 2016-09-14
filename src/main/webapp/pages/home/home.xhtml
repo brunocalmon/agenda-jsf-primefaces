@@ -5,20 +5,19 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui" template="/templates/main.xhtml">
-	<ui:define name="content">
 
+	<ui:define name="breadcrumb">
 		<h:form prependId="false">
 			<p:breadCrumb homeDisplay="false">
 				<p:menuitem value="Início" action="/pages/home/home.xhtml" />
 			</p:breadCrumb>
 		</h:form>
+	</ui:define>
 
+	<ui:define name="content">
 		<div align="center">
-			<div id="div-content-middle" class="text-align-center" align="justify">
-				<h:form prependId="false" id="formHome">
-					<h:outputLabel value="Bem-Vindo à agenda." style="font-size:2em" />
-				</h:form>
-			</div>
+			<h1>Bem-Vindo à agenda.</h1>
+			<p class="underline">A melhor solução para organizar seus contatos.</p>
 		</div>
 	</ui:define>
 </ui:composition>
