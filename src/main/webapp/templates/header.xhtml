@@ -6,16 +6,13 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-		<h:form id="menu-navbar" prependId="false">
-			<div id="bannerHeader" />
+		<h:form id="menu-navbar" prependId="false" styleClass="">
+			<div id="bannerHeader" class="ui-g-nopad" style="border-radius: 5px"/>
 			<p:menubar id="navbarAgenda">
-
 				<p:menuitem id="menuHome" value="#{msg['lbl.home']}"
 					action="/pages/home/home.xhtml" />
-
 				<p:menuitem id="menuContato" value="#{msg['lbl.contatos']}"
 					action="#{contatoMB.redirecionaParaConsultarContato()}" />
-
 			</p:menubar>
 		</h:form>
 

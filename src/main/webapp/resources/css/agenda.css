@@ -38,6 +38,10 @@
 	text-align: center;
 }
 
+.vertical-align-middle {
+	vertical-align: middle !important;
+}
+
 .padding-auto {
 	padding: auto;
 }
@@ -67,8 +71,7 @@
 	background-size: 1904px 450px;
 	background-repeat: repeat-x;
 	display: block;
-	margin-bottom: -35px;
-	margin-top: -25px;
+	margin: 0 0 -10px 0;
 }
 
 #navbarAgenda {
@@ -96,7 +99,6 @@
 	border: 1px #6f3e53 solid;
 	border-radius: 5px;
 	box-shadow: 0px 0px 5px grey;
-	width: 75%;
 }
 
 #dataTable_paginator_top, #dataTable_paginator_bottom {
@@ -175,4 +177,12 @@ textarea {
 .plus-icon {
 	-webkit-filter: hue-rotate(45deg);
 	filter: hue-rotate(45deg);
+}
+
+#navbarAgenda li[class~='ui-menuitem']:hover {
+	background-color: #ffeaea;
+}
+
+#tipoBuscaContato {
+	width: 190px;	
 }

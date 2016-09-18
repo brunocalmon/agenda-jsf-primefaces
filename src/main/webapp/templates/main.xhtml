@@ -15,28 +15,30 @@
 	</h:head>
 
 	<h:body>
+		<div id="div-body" class="ui-g ui-g-nopad">
+			<div id="div-header" class="ui-g-12 ui-g-nopad">
+				<!-- Uso do 'ui:include' porque o arquivo se encontra no dir de templates. O 'ui:define' nao encontra. -->
+				<ui:include src="/templates/header.xhtml" />
+			</div>
 
-		<div id="div-header">
-			<!-- Uso do 'ui:include' porque o arquivo se encontra no dir de templates. O 'ui:define' nao encontra. -->
-			<ui:include src="/templates/header.xhtml" />
-		</div>
-
-		<div id="div-breadcrumb">
-			<!-- Todo 'ui:define' que tiver o mesmo 'name' e estiver dentro de um 'ui-composition' sera inserido neste local. -->
-			<ui:insert name="breadcrumb" />
-		</div>
-
-		<div id="div-content" align="center">
-			<div id="div-content-middle" align="justify">
+			<div id="div-breadcrumb" class="ui-g-12 ui-g-nopad">
 				<!-- Todo 'ui:define' que tiver o mesmo 'name' e estiver dentro de um 'ui-composition' sera inserido neste local. -->
-				<ui:insert name="content" />
+				<ui:insert name="breadcrumb" />
+			</div>
+
+			<div id="div-content" class="ui-g-12 ui-g-nopad">
+				<div class="ui-g-2" />
+				<div id="div-content-middle" class="ui-g-8">
+					<!-- Todo 'ui:define' que tiver o mesmo 'name' e estiver dentro de um 'ui-composition' sera inserido neste local. -->
+					<ui:insert name="content" />
+				</div>
+				<div class="ui-g-2" />
+			</div>
+
+			<!-- Uso do 'ui:include' porque o arquivo se encontra no dir de templates. O 'ui:define' nao encontra. -->
+			<div id="div-footer" class="ui-g-12 ui-g-nopad">
+				<ui:include src="/templates/footer.xhtml" />
 			</div>
 		</div>
-
-		<!-- Uso do 'ui:include' porque o arquivo se encontra no dir de templates. O 'ui:define' nao encontra. -->
-		<div id="div-footer">
-			<ui:include src="/templates/footer.xhtml" />
-		</div>
-		
 	</h:body>
 </ui:composition>
